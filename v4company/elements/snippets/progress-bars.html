@@ -1,0 +1,29 @@
+{% if settings.gift_bar_sideCart and settings.value_min_gift and not settings.use_performance_mode %}
+    <div class="plugoo-progress-bar gift" data-min-gift="{{ settings.value_min_gift|replace({'.': '', ',': '.' }) }}" data-animation="{{ settings.git_bar_animation}}">
+        <div class="text-remain {% if settings.progress_bars_fixed_colors %}color-fixed{% endif %}">
+            <span class="plugoo-text-remain"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="0 0 682.667 682.667" xml:space="preserve" class="">
+                <g>
+                    <g  transform="matrix(1.33333 0 0 -1.33333 0 682.667)">
+                        <path d="M0 0a32.1 32.1 0 0 1-9.415 22.719 32.1 32.1 0 0 1-22.719 9.415h-417.732a32.1 32.1 0 0 1-22.719-9.415A32.1 32.1 0 0 1-482 0v-48.2a32.093 32.093 0 0 1 9.415-22.718 32.097 32.097 0 0 1 22.719-9.415h417.732a32.097 32.097 0 0 1 22.719 9.415A32.093 32.093 0 0 1 0-48.2Z" style="stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" transform="translate(497 320.267)" fill="none" stroke="#000000" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000" class=""></path><path d="M191.733 239.934h128.533v112.467H191.733ZM207.8 15h96.4v224.934h-96.4z" style="stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" fill="none" stroke="#000000" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000" class=""></path><path d="M0 0h-417.732v-192.8a32.096 32.096 0 0 1 9.415-22.719 32.092 32.092 0 0 1 22.717-9.415h353.467a32.093 32.093 0 0 1 22.718 9.415A32.1 32.1 0 0 1 0-192.8z" style="stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" transform="translate(464.866 239.934)" fill="none" stroke="#000000" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000" class=""></path><path d="M0 0h-120.5c-39.934 0-72.3 32.366-72.3 72.3 0 39.933 32.366 72.3 72.3 72.3h7.149C-50.747 144.6 0 93.853 0 31.249ZM0 0h120.5c39.934 0 72.3 32.366 72.3 72.3 0 39.933-32.366 72.3-72.3 72.3h-7.149C50.747 144.6 0 93.853 0 31.249Z" style="stroke-width:30;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1" transform="translate(256 352.4)" fill="none" stroke="#000000" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="none" stroke-opacity="" data-original="#000000" class=""></path>
+                    </g>
+                </g>
+            </svg>
+        </div>
+        <div class="progress-size">
+            <div class="percent-bar"></div>
+        </div>
+    </div>
+{% endif %}
+
+{% if settings.freeship_bar_sideCart and settings.value_min_freeship and not settings.use_performance_mode  %}
+    <div class="plugoo-progress-bar freeship" data-min-freeship="{{ settings.value_min_freeship|replace({'.': '', ',': '.' }) }}" data-animation="{{ settings.freeship_bar_animation}}">
+        <div class="text-remain {% if settings.progress_bars_fixed_colors %}color-fixed{% endif %}">
+            <span class="plugoo-text-remain"></span>
+            <svg enable-background="new 0 0 35 35" height="512" viewBox="0 0 35 35" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m1.9126 24.5c0 .5527.4473 1 1 1h1.9835c.0114 2.2072 1.8087 4 4.0184 4s4.0071-1.7928 4.0184-4h8.9631c.0114 2.2072 1.8087 4 4.0184 4s4.0071-1.7928 4.0184-4h2.1544c.5527 0 1-.4473 1-1v-8.752c0-.7305-.3145-1.4268-.8643-1.9102-2.3638-1.8583-3.0774-3.3378-5.0671-3.3378h-4.2412v-4c0-.5527-.4473-1-1-1h-19c-.5527 0-1 .4473-1 1v12c0 .0142.0074.026.0081.04-.001.0176-.01.0322-.01.0498v5.9102zm7.002 3c-1.1143 0-2.0205-.9063-2.0205-2.0205s.9063-2.0205 2.0205-2.0205 2.0205.9063 2.0205 2.0205-.9063 2.0205-2.0205 2.0205zm17 0c-1.1143 0-2.0205-.9063-2.0205-2.0205s.9063-2.0205 2.0205-2.0205 2.0205.9063 2.0205 2.0205-.9063 2.0205-2.0205 2.0205zm1.2412-15c.8769 0 1.0156.5665 3.7471 2.8398.1172.1035.1846.252.1846.4082v7.752h-1.6065c-.0283 0-.052.0137-.0798.0161-.6907-1.2213-1.9863-2.0571-3.4866-2.0571-1.4963 0-2.7891.8314-3.4813 2.0474-.0112-.0004-.0203-.0064-.0314-.0064h-9.9795c-.0095 0-.0175.0051-.027.0054-.6923-1.2153-1.9849-2.0464-3.4808-2.0464-1.4963 0-2.7891.8314-3.4813 2.0474-.0112-.0004-.0203-.0064-.0314-.0064h-1.4893v-4h18.002c.5527 0 1-.4473 1-1v-6zm-23.2412-5h17v3.9902c0 .0034-.002.0063-.002.0098s.002.0063.002.0098v5.9902h-17z"></path></g></svg>
+        </div>
+        <div class="progress-size">
+            <div class="percent-bar"></div>
+        </div>
+    </div>
+{% endif %}

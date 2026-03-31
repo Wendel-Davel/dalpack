@@ -1,0 +1,73 @@
+{% if  settings.show_products_youtube and not settings.use_performance_mode %}
+{% set videoID = settings.link_youtube | split('=') | last  %}
+{% set videoLink =  settings.link_youtube %}
+
+<div id="box-video" style="order: {{ settings.position_video_youtube }}">
+    {% if  settings.bg_youtube and not utils.is_mobile %}
+    <style type="text/css">
+        #box-video {
+            background-image: url('{{ asset(settings.bg_youtube) }}');
+            background-position: center right;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }					
+    </style>
+    {% endif %}
+    <div class="container">
+        <div class="section-header">
+            <div class="section-header-left">
+                <svg height="34" viewBox="0 0 176 176" width="34" xmlns="http://www.w3.org/2000/svg"><g data-name="Layer 2"><g id="_02.youtube" data-name="02.youtube"><path id="background" d="m144.52 173a532.59 532.59 0 0 1 -113 0 32.07 32.07 0 0 1 -28.52-28.48 532.59 532.59 0 0 1 0-113 32.07 32.07 0 0 1 28.48-28.52 532.59 532.59 0 0 1 113 0 32.07 32.07 0 0 1 28.52 28.48 532.59 532.59 0 0 1 0 113 32.07 32.07 0 0 1 -28.48 28.52z" fill="#e60000"/><path id="icon" d="m140.43 61.54c-2.2-6.77-9.48-10.87-16.18-11.81a343.16 343.16 0 0 0 -72.5 0c-6.7.94-14 5-16.18 11.81a137.42 137.42 0 0 0 0 52.93c2.2 6.76 9.48 10.87 16.18 11.81a343.16 343.16 0 0 0 72.5 0c6.7-.94 14-5 16.18-11.81a137.42 137.42 0 0 0 0-52.93zm-65.59 47.54v-42.16l34.32 21.08c-11.57 7.11-22.8 14-34.32 21.08z" fill="#fff"/></g></g></svg>
+                <div class="header-left-content">
+                    <h2>
+                        {{ settings.showcase_title_youtube }}
+                    </h2>
+                    <p>{{ settings.showcase_subtitle_youtube }}</p>   
+                </div>
+            </div>
+            <div class="section-header-right">
+                <p>{{settings.showcase_invite_youtube}}</p>
+                <a href="{{ settings.link_canal }}" target="_blank">Inscreva-se</a>
+            </div>
+
+        </div>
+        <div class="w-full">
+            <div class="box-video">	
+                <div class="iframe-video">
+                    <div class="thumbnail-video">
+                        <img src="https://img.youtube.com/vi/{{videoID}}/maxresdefault.jpg" alt="thumbnail video youtube">
+                        <div class="play-video" onclick="document.getElementById('youtube').src = '{{videoLink|replace({'watch?':'','v=':'embed/'})|trim }}' + '?autoplay=1';">
+                            <svg height="60pt" viewBox="0 -77 512.00213 512" width="60pt" xmlns="http://www.w3.org/2000/svg"><path d="m501.453125 56.09375c-5.902344-21.933594-23.195313-39.222656-45.125-45.128906-40.066406-10.964844-200.332031-10.964844-200.332031-10.964844s-160.261719 0-200.328125 10.546875c-21.507813 5.902344-39.222657 23.617187-45.125 45.546875-10.542969 40.0625-10.542969 123.148438-10.542969 123.148438s0 83.503906 10.542969 123.148437c5.90625 21.929687 23.195312 39.222656 45.128906 45.128906 40.484375 10.964844 200.328125 10.964844 200.328125 10.964844s160.261719 0 200.328125-10.546875c21.933594-5.902344 39.222656-23.195312 45.128906-45.125 10.542969-40.066406 10.542969-123.148438 10.542969-123.148438s.421875-83.507812-10.546875-123.570312zm0 0" fill="#f00"/><path d="m204.96875 256 133.269531-76.757812-133.269531-76.757813zm0 0" fill="#fff"/></svg>
+                        </div>
+                    </div>
+                    <iframe id="youtube" style="display: none" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                </div>
+                <div class="showcase-video">
+                    <div class="section-header">
+                        <h2 class="title-section">
+                            Produtos do vídeo
+                        </h2>
+                    </div>
+                    {% set productVideo = Products({ 
+                        'filter': ['available'], 
+                        'limit': 4, 
+                        'order': {'quantity_sold': 'desc'}, 
+                        'categories' : settings.showcase_cat_id
+                        }) 
+                    %}
+
+                    {% if productVideo %}
+                        <div class="product-video">
+                            {% element 'snippets/product-video' {
+                                "products": productVideo
+                            } 
+                            %}
+                        </div>                       
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}

@@ -1,0 +1,133 @@
+
+{% if settings.cat_storie_prods %} 
+    {% set productStories = Products({ 
+        'filter': ['available'], 
+        'limit': 6, 
+        'order': {'quantity_sold': 'desc'}, 
+        'categories' : settings.cat_storie_prods
+        }) 
+    %}
+{% else %}
+    {% set productStories = Products({ 
+        'filter': ['available'], 
+        'limit': 6, 
+        'order': {'quantity_sold': 'desc'}, 
+        }) 
+    %}
+{% endif %}
+
+<section class="plugoo-stories-products" style="order: {{ settings.position_stories_products}}">
+    <div class="container ">
+        <div class="section-header">
+            <h2 class="title-section">
+               {% if settings.title_storie_prods %} 
+                    {{ settings.title_storie_prods }} 
+                {% else %}
+                    Produtos em destaque
+               {% endif%}
+            </h2>
+         </div>
+        <div class="story shadow blur"></div>
+        <div class="product-story-orbs swiper-container">
+            <ul class="swiper-wrapper">
+                {% for item in productStories %}
+                    <li class="stories item swiper-slide">
+                        <a id="story-{{ loop.index }}">
+                            <img src="{{ item.images[0].full }}" alt=""> </img>
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><circle cx="50" cy="50" r="40"></circle></svg>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="dots"></div>
+        </div>
+        <div class="product-story-content hidden">
+            <div class="story-container">
+                {% for item in productStories %}    
+                    <ul data-story="story-{{ loop.index }}">
+                        {% set img_length = '' %}
+                        {% for images in item.images %}
+                            {% set img_length = loop.index %}
+
+                            <li class="posts"  id="post-{{img_length}}">
+                                <img data-src="{{ images.full }}" src="{{ asset('img/empty.png') }}" class="lazyload" alt=""> </img>
+                            </li>
+                        {% endfor %}
+                            {% set current_price = item.price_offer > 0 ? item.price_offer : item.price %}
+                            {% set old_price     = item.price_offer > 0 ? item.price : false %}
+                            {% set discount = item.price_offer > 0 ? (100 - (item.price_offer / item.price) * 100) | number_format : false %}
+                            {% set prodAvailable = item.available and (item.stock > 0 or settings.without_stock_sale) and not item.upon_request ? true : false %}
+                            <div class="info-product">
+                                <a href="{{ item.link }}" class="link-story-prod">
+                                    <div class="product-story-container">
+                                        <div class="product-thumb">
+                                            <img src="{{ item.images[0].small}}" alt="{{item.name}}">
+                                        </div>
+                                        <div class="infos">
+                                            <span class="product-name">{{ item.name }}</span>
+                                            {% if prodAvailable and item.has_variation and item.has_other_prices %}
+                                                <span class="product-has-variants">
+                                                    {{ Translation('a_partir_de') }}
+                                                </span>
+                                            {% endif %}
+                                            <div class="product-price">
+                                                {% if prodAvailable %}
+                                                    {% if old_price %}
+                                                        <span class="old-price">
+                                                            {{ settings.currency }} {{ old_price | currency }}
+                                                        </span>
+                                                    {% endif %}
+                                                    <span class="current-price">
+                                                        {{ settings.currency }} {{ current_price | currency }}
+                                                    </span>
+                                                    {% if discount %}
+                                                        <div class="discount">
+                                                            <svg viewBox="0 0 12 12" width="11" height="12" fill="#fff"><path fill="inherit" d="M.813 5.647a.5.5 0 01.707 0L5.5 9.628V1.166a.5.5 0 111 0v8.461l3.98-3.98a.5.5 0 01.637-.057l.07.058a.5.5 0 010 .707l-4.833 4.832a.508.508 0 01-.019.018l-.027.022a.379.379 0 01-.044.031l-.03.017a.363.363 0 01-.08.034.398.398 0 01-.08.018.45.45 0 01-.063.006H5.99a.503.503 0 01-.061-.005l.072.005a.502.502 0 01-.151-.023l-.023-.008-.015-.006a.496.496 0 01-.048-.022l-.015-.01-.01-.004a.498.498 0 01-.051-.037l-.017-.015a.232.232 0 01-.025-.022L.813 6.354a.5.5 0 010-.707z"></path></svg>
+                                                            <span>
+                                                                {{ discount }}%
+                                                            </span>
+                                                        </div>
+                                                    {% endif %}
+
+
+                                                {% elseif item.upon_request %}
+
+                                                    {% element 'snippets/product-message' { 'product_message': 'Sob consulta', 'know_more' : 'Saiba mais' } %}
+
+                                                {% elseif item.stock <= 0 %}
+
+                                                    {% element 'snippets/product-message' {  'product_message': 'Produto Esgotado!', 'know_more' : 'Avise-me quando chegar' } %}
+
+                                                {% else %}
+
+                                                    {% element 'snippets/product-message' {  'product_message': 'Produto Esgotado!', 'know_more' : 'Avise-me quando chegar'  } %}
+
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+
+                        <div class="mini-story-bars"> 
+                            {% for qnty in 1..img_length %}
+                                <div class="story-full-bar" data-post="post-{{qnty}}"><div class="story-bar-progress"></div></div>
+                            {% endfor %}
+                        </div>
+                    </ul>
+                {% endfor %}
+                <div class="actions">
+                    <div class="prev-story"></div>
+                    <div class="next-story"></div>
+                    <span class="close-story">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </span> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

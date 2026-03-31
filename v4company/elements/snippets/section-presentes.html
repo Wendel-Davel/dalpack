@@ -1,0 +1,114 @@
+{% set quantity = presente_quantity_1 | default(8) %} {% set slide = slide %} {%
+set variants = true %} {# =============================== CONFIGURAÇÃO DOS
+FILTROS =============================== #} {% set filters = ['available'] %} {%
+if presente_type_1 %} {% set filters = filters | merge([presente_type_1]) %} {%
+endif %} {# =============================== BUSCA DE PRODUTOS
+=============================== #} {% set products = Products({ 'filter':
+filters, 'limit': quantity, 'categories': presente_category_1 }) %} {#
+=============================== SEÇÃO =============================== #} {% if
+products | length > 0 %}
+
+<section class="s-presentes" style="order: 9">
+  <div class="container">
+    <div class="topo">
+      <div class="section-header">
+        <h2 class="title-section">{{ settings.presente_title_1 }}</h2>
+        <p>{{ settings.presente_desc_1 }}</p>
+      </div>
+
+      <div class="setas">
+        <button class="btn-nav btn-prev">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+          >
+            <path
+              d="M7 13L1 7L7 1"
+              stroke="#6B7280"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+
+        <button class="btn-nav btn-next">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="8"
+            height="14"
+            viewBox="0 0 8 14"
+            fill="none"
+          >
+            <path
+              d="M1 13L7 7L1 1"
+              stroke="#6B7280"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="down">
+      <div class="banner">
+        <a href="{{ settings.presente_link_1 }}" class="banner-desk">
+          <img src="{{ asset(settings.presente_banner) }}" alt="" />
+        </a>
+      </div>
+
+      <div class="presentes swiper">
+        <div class="swiper-wrapper">
+          {% for item in products %}
+
+          <div class="swiper-slide">
+            {% element 'snippets/product' { product: item, slide: slide,
+            variants: variants } %}
+          </div>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".presentes.swiper", {
+      slidesPerView: 4,
+      spaceBetween: 24,
+      loop: true,
+
+      navigation: {
+        nextEl: ".s-presentes .btn-next",
+        prevEl: ".s-presentes .btn-prev",
+      },
+
+      breakpoints: {
+        0: {
+          slidesPerView: 1.2,
+        },
+
+        480: {
+          slidesPerView: 2,
+        },
+
+        768: {
+          slidesPerView: 3,
+        },
+
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+    });
+  });
+</script>

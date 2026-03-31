@@ -1,0 +1,17 @@
+{% set store_main_price_boleto = settings.store_main_price_boleto %}
+
+{% if store_main_price_boleto %}                    
+<div id="preco">                        
+    <div id="produto_preco">                            
+    {% if product.price_offer > 0 %}                                
+        <div class="precode" id="precoDe">                                   
+            {{ settings.currency }} {{ product.price|currency }}                                
+        </div>                            
+    {% endif %}                            
+        <span class="PrecoPrincipal price-payment">{{ product.payment }}</span>                            
+        <div id="info_preco">{{ product.payment }}</div>                        
+    </div>                    
+</div>                
+{% else %}                   
+    {{ productHelper.pricing() }}                
+{% endif %}

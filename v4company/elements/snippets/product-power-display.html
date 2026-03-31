@@ -1,0 +1,67 @@
+{% if product.available and (product.stock > 0) and not product.upon_request %}
+{% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
+
+<div class="item item-actions-fixed">
+    {% set hover_class = product.available ? 'show-down' : '' %}
+    <div class="product-side flex items-center">
+            <div class="image">
+                <a href="{{ product.link }}" class="">
+                    <img class="small-img" src="{{ product.images[0].small }}" data-src="{{ product.images[0].small }}" alt="{{ product.name }}">
+                </a>
+            </div>
+            <a class="product-info" href="{{ product.link }}">
+                <div class="product-name">
+                    {{ product.name }}
+                </div>
+
+                <div class="product-price">
+                    {% if product.available and (product.stock > 0) %}
+                        {% if discount %}
+                            <div class="tag-list tag-discount">
+                                <span class="discount-value">
+                                    <svg viewBox="0 0 12 12" width="6" height="7" fill="#fff"><path fill="inherit" d="M.813 5.647a.5.5 0 01.707 0L5.5 9.628V1.166a.5.5 0 111 0v8.461l3.98-3.98a.5.5 0 01.637-.057l.07.058a.5.5 0 010 .707l-4.833 4.832a.508.508 0 01-.019.018l-.027.022a.379.379 0 01-.044.031l-.03.017a.363.363 0 01-.08.034.398.398 0 01-.08.018.45.45 0 01-.063.006H5.99a.503.503 0 01-.061-.005l.072.005a.502.502 0 01-.151-.023l-.023-.008-.015-.006a.496.496 0 01-.048-.022l-.015-.01-.01-.004a.498.498 0 01-.051-.037l-.017-.015a.232.232 0 01-.025-.022L.813 6.354a.5.5 0 010-.707z"></path></svg>
+                                    {{ discount | number_format }}%
+                                </span>
+                            </div>
+                        {% endif %}
+
+                        {% set current_price = product.price_offer > 0 ? product.price_offer : product.price %}
+                        {% set old_price     = product.price_offer > 0 ? product.price : false %}
+
+                        {% if product.has_variation and product.has_other_prices %}
+                            <span class="product-has-variants">
+                                {{ Translation('a_partir_de') }}
+                            </span>
+                        {% endif %}
+
+                        <div class="price display-cash">
+
+                            {% if old_price %}
+                                <span class="old-price">
+                                    {{ settings.currency }} {{ old_price | currency }}
+                                </span>
+                            {% endif %}
+
+                            <span class="current-price">
+                                {{ settings.currency }} {{ current_price | currency }}
+                            </span>
+                            <br>
+                            <span class="product-installments">
+                                {{ product.payment }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+                </div>
+            </a>
+            <div class="actions actions-fixed" data-product="{{ product.id }}" >
+                {% if product.available and (product.stock > 0) %}
+                        <a class="product-button" href="{{ product.link }}">
+                            Ver mais
+                        </a>
+                {% endif %}
+            </div>
+    </div>
+</div>
+{% endif %}

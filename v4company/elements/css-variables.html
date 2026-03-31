@@ -1,0 +1,88 @@
+<style>
+  html{
+
+  {# Font #}
+      --font_family                               : 'Inter', sans-serif;
+
+  {# General #}
+      --color_font_medium                         : {{ settings.color_font_medium                      }};
+      --color_font_dark                           : {{ settings.color_font_dark                        }};
+      --color_font_light                          : {{ settings.color_font_light                       }};
+      --color_font_inverted                       : {{ settings.color_font_inverted                    }};
+      --color_primary                             : {{ settings.color_primary_medium                   }};
+      --color_primary_medium                      : {{ settings.color_primary_medium                   }};
+      --color_primary_light                       : {{ settings.color_primary_light                    }};
+      --color_secondary_medium                    : {{ settings.color_secondary_medium                 }};
+      --color_gray_medium                         : {{ settings.color_gray_medium                      }};
+      --color_gray_dark                           : {{ settings.color_gray_dark                        }};
+      --color_menu                                : {{ settings.color_menu                             }};
+      --color_menu_text                           : {{ settings.color_menu_text                        }};
+      --color_whats_bg                            : {{ settings.color_whats_bg                         }};
+      --color_whats_text                          : {{ settings.color_whats_text                       }};
+      --color_button_menu                         : {{ settings.color_button_menu                      }};
+      --color_button_menu_text                    : {{ settings.color_button_menu_text                 }};
+      --color_countdown_bg                        : {{ settings.color_countdown_bg                     }};
+      --color_countdown_text                      : {{ settings.color_countdown_text                   }};
+      --color_text_youtube                        : {{ settings.color_text_youtube                     }};
+      --color_header_transparent                  : {{ settings.color_header_transparent               }};
+      --bg_header_transparent                     : {{ settings.bg_header_transparent                  }};
+      --color_start_circle                        : {{ settings.start_color_circle                     }};
+      --color_end_circle                          : {{ settings.end_color_circle                       }};
+      --color_progress_bar_gift                   : {{ settings.color_bar_gift                         }};
+      --color_bar_freeship                        : {{ settings.color_bar_freeship                     }};
+
+
+  {# Header #}
+      --color_header_bg                           : {{ settings.color_header_bg                        }};
+      --color_text_global                         : {{ settings.color_text_global                      }};
+      --color_header_second_font                  : {{ settings.color_header_second_font               }};
+      --color_header_highlight                    : {{ settings.color_header_highlight                 }};
+      --color_header_cart_count                   : {{ settings.color_header_cart_count                }};
+      --color_header_details                      : {{ settings.color_header_details                   }};
+      --color_top_header_bg                       : {{settings.color_top_header_bg                     }};
+      --color_top_header_font                     : {{settings.color_top_header_font                   }};
+      --color_text_icon_head                      : {{ settings.color_text_icon_head                   }};
+
+  {# Personalizacao #}
+      --color_bg_floating_buy                     : {{ settings.color_bg_float_buy                       }};
+      --color_text_floating_buy                   : {{ settings.color_text_float_buy                     }};
+      --color_bg_buy_button_floating_buy          : {{ settings.color_bg_button_float_buy                }};
+      --color_text_buy_button_floating_buy        : {{ settings.color_text_button_float_buy              }};
+
+
+  {# Footer #}
+      --color_footer_bg                           : {{ settings.color_footer_bg                        }};
+      --color_footer_main_font                    : {{ settings.color_footer_main_font                 }};
+      --color_footer_second_font                  : {{ settings.color_footer_second_font               }};
+      --color_footer_highlight                    : {{ settings.color_footer_highlight                 }};
+      --color_footer_button                       : {{ settings.color_footer_button                    }};
+      --color_footer_button_text                  : {{ settings.color_footer_button_text               }};
+      --color_footer_details                      : {{ settings.color_footer_details                   }};
+      --color_news                                : {{ settings.color_news                             }};
+      --color_news_text                           : {{ settings.color_news_text                        }};
+
+      --color_seals_shipping_bg                   : {{ settings.color_seals_shipping_bg                }};
+      --color_seals_shipping_text                 : {{ settings.color_seals_shipping_text              }};
+      --color_seals_bg                            : {{ settings.color_seals_bg                         }};
+      --color_seals_text                          : {{ settings.color_seals_text                       }};
+      --color_pay_list_text                       : {{ settings.color_pay_list_text                    }};
+      --color_pay_list_bg                         : {{ settings.color_pay_list_bg                      }};
+
+      --color_seals_discount_bg                   : {{ settings.color_seals_discount_bg                }};
+      --color_seals_discount_text                 : {{ settings.color_seals_discount_text              }};
+
+  {# Selos #}
+      --color_seal                                : {{ settings.color_seals_bg                         }};
+      --color_bg_seal                             : {{ settings.color_seals_text                       }};
+
+  {# Images and icons #}
+      --arrow_select                              : url("data:image/svg+xml,%3Csvg fill='%23{{ settings.text_input|replace({'#': ''}) }}' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 284.929 284.929'%3E%3Cpath d='M282.082,76.511l-14.274-14.273c-1.902-1.906-4.093-2.856-6.57-2.856c-2.471,0-4.661,0.95-6.563,2.856L142.466,174.441 L30.262,62.241c-1.903-1.906-4.093-2.856-6.567-2.856c-2.475,0-4.665,0.95-6.567,2.856L2.856,76.515C0.95,78.417,0,80.607,0,83.082 c0,2.473,0.953,4.663,2.856,6.565l133.043,133.046c1.902,1.903,4.093,2.854,6.567,2.854s4.661-0.951,6.562-2.854L282.082,89.647 c1.902-1.903,2.847-4.093,2.847-6.565C284.929,80.607,283.984,78.417,282.082,76.511z' /%3E%3C/svg%3E%0A");
+      --height_prod_desktop                       : {{ settings.showcase_product_height_desktop        }}px;
+      --height_prod_mobile                        : {{ settings.showcase_product_height_mobile         }}px;
+
+  {# Newsletter pop-up #}
+      --color_bg_button_newsletter                : {{ settings.color_bg_button_newsletter             }};
+      --color_text_button_newsletter              : {{ settings.color_text_button_newsletter           }};
+
+  }
+</style>

@@ -1,0 +1,40 @@
+<div class="search-content-full">
+    <div class="container">
+        <form class="header-search-wrapper" action="{{ links.search }}" method="get" data-search="suggestion">
+            <button class="button-search" aria-label="Buscar">
+                <i class="icon icon-search"></i>
+            </button>
+            <div class="button-search-close">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24px" height="24px">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+            </div>
+            <input type="hidden" name="loja" value="{{ store.id }}">
+            <input class="input-search" placeholder="Busque seu produto" spellcheck="false" autocomplete="off" data-input="suggestion" type="text"  name="palavra_busca">
+            <div class="suggestion is-hidden" data-container="suggestion"></div>
+        </form>
+        <div class="flex options-search">
+            {% if settings.show_top_terms_search %}
+                <div class="top-terms-search">
+                    <p>Termos mais buscados</p>
+                    <ul>
+                        {% for i in 1..5 %}
+                            {% set nameSuggestion = attribute(settings, 'title_top_terms_search_' ~ i) %}
+                            {% set linkSuggestion = attribute(settings, 'top_terms_search_link_' ~ i) %}
+                            {% if nameSuggestion %}
+                            <li>
+                                <span class="number-suggestion">{{ i }}</span>
+                                <a href="{{ linkSuggestion }}">{{ nameSuggestion }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if settings.menu_show_brands and not settings.use_performance_mode %}
+                {% element 'snippets/banner-brands' %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div height="100vh" type="absolute" class="overlay-search"></div>

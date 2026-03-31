@@ -1,0 +1,159 @@
+{% if not settings.use_performance_mode %} {% set lazy_class = swiper ?
+'swiper-lazy' : 'lazyload' %} {% set show = settings.show_navegue_categoria %}
+{% set valueCount = settings.value_count_category_nav %} {% set
+slide_departaments = utils.is_mobile ? banners.extra8.slides :
+banners.extra7.slides %} {% set quantDepart = 0 %} {% for i in 1..10 %} {% set
+img_navegue = utils.is_mobile ? attribute(settings, 'categoria_mobile_'~i) :
+attribute(settings, 'categoria_'~i) %} {% if img_navegue %} {% set quantDepart =
+quantDepart + 1 %} {% endif %} {% endfor %} {% if show %}
+<div class="box-slide" style="order: 7">
+  <div class="container">
+    <!-- <div class="section-header">
+      <h2 class="title-section">{{settings.navegue_categoria_nome}}</h2>
+    </div> -->
+    <div
+      class="{{quantDepart > (utils.is_mobile ? 3 : 4) ? 'swiper-container' : ''}}"
+    >
+      <div class="categorias-itens swiper-wrapper">
+        {% for i in 1..valueCount %} {% set img_navegue_cat = utils.is_mobile ?
+        attribute(settings, 'categoria_mobile_'~i) : attribute(settings,
+        'categoria_'~i) %} {% set title_navegue_cat = attribute(settings,
+        'categoria_title_' ~ i) %} {% if img_navegue_cat %}
+        <div class="item swiper-slide">
+          <a href="{{ attribute (settings, 'categoria_link_' ~ i) }}">
+            <div class="categoria-imagem">
+              <img
+                {%
+                if
+                notLazy
+                %}class="{{ lazy_class }}"
+                src="{{ asset('img/empty.png') }}"
+                data-{%
+                endif
+                %}src="{{ asset(img_navegue_cat) }}"
+                alt="Imagem de categoria"
+              />
+            </div>
+            <p>{{ title_navegue_cat}}</p>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+      <div class="cont-nav">
+        <div class="dots"></div>
+        <div class="setas">
+          <button class="btn-nav btn-prev">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="8"
+              height="14"
+              viewBox="0 0 8 14"
+              fill="none"
+            >
+              <path
+                d="M7 13L1 7L7 1"
+                stroke="#6B7280"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button class="btn-nav btn-next">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="8"
+              height="14"
+              viewBox="0 0 8 14"
+              fill="none"
+            >
+              <path
+                d="M1 13L7 7L1 1"
+                stroke="#6B7280"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %} {% if slide_departaments %}
+<div class="box-slide" style="order: 7">
+  <div class="container">
+    <!-- <div class="section-header">
+      <h2 class="title-section">{{settings.navegue_categoria_nome}}</h2>
+    </div> -->
+    <div
+      class="{{slide_departaments|length > (utils.is_mobile ? 3 : 4) ? 'swiper-container' : ''}}"
+    >
+      <div class="categorias-itens swiper-wrapper">
+        {% for departament in slide_departaments %} {% set img_navegue_cat =
+        departament.image %} {% set link_navegue_cat = departament.link %} {%
+        set title_navegue_cat = departament.label %} {% if img_navegue_cat %}
+        <div class="item swiper-slide">
+          <a href="{{ link_navegue_cat }}">
+            <div class="categoria-imagem">
+              <img
+                {%
+                if
+                notLazy
+                %}class="{{ lazy_class }}"
+                src="{{ asset('img/empty.png') }}"
+                data-{%
+                endif
+                %}src="{{ img_navegue_cat }}"
+                alt="Imagem de categoria"
+              />
+            </div>
+            <p>{{title_navegue_cat}}</p>
+          </a>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+      <div class="cont-nav">
+        <div class="dots"></div>
+        <div class="setas">
+          <button class="btn-nav btn-prev">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="8"
+              height="14"
+              viewBox="0 0 8 14"
+              fill="none"
+            >
+              <path
+                d="M7 13L1 7L7 1"
+                stroke="#6B7280"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <button class="btn-nav btn-next">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="8"
+              height="14"
+              viewBox="0 0 8 14"
+              fill="none"
+            >
+              <path
+                d="M1 13L7 7L1 1"
+                stroke="#6B7280"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %} {% endif%} {% endif %}

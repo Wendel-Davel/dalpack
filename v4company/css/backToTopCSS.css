@@ -1,0 +1,42 @@
+#back-to-top {
+    position: fixed;
+    bottom: 130px;
+    right: 26px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background-color: #d3d3d3;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s, transform 0.3s;
+}
+#back-to-top svg {
+  width: 24px;
+  height: 24px;
+}
+
+#back-to-top.show {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+#back-to-top.hide {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+@media(max-width:768px){
+#back-to-top{
+	    bottom: 185px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    z-index: 10;
+  }
+}

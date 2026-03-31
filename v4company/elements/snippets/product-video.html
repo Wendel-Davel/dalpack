@@ -1,0 +1,13 @@
+<div class="product-video-content swiper-container">
+    <div class="swiper-wrapper">
+        {% for item in products %}
+            <li class="item swiper-slide flex {{ settings.fixed_actions ? 'item-actions-fixed' }}">
+
+                {% element 'snippets/product' { 'product' : item } %}
+                
+            </li>
+        {% endfor %}
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>

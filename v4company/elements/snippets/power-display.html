@@ -1,0 +1,40 @@
+{% if settings.side_showcase and not settings.use_performance_mode %} 
+
+<div class="plugoo-side-button">
+    {% if settings.bg_side_sc %}
+        <img class="plugoo-float-img" src="{{ asset(settings.icon_side_sc) }}" alt="Botão flutuante">
+    {% endif %}
+    <div class="plugoo-side-pulse"></div>
+</div>
+<aside class="plugoo-side-showcase">
+    <div class="side-showcase-header">
+        {% if settings.bg_side_sc %}
+            <img src="{{ asset(settings.bg_side_sc) }}" alt="Banner">
+        {% endif %}
+
+        <span class="side-showcase title">Veja nossas recomendações</span>
+    </div>
+    <div class="side-showcase-body">
+        <nav class="tabs">
+            <ul class="tablist">
+                {% if settings.side_showcase_tab_1 %}
+                    <li class="tab-1">{{ settings.side_showcase_tab_1}}</li>
+                {% endif %}
+                {% if settings.side_showcase_tab_2 %}
+                    <li class="tab-2">{{ settings.side_showcase_tab_2}}</li>
+                {% endif %}
+                {% if settings.side_showcase_tab_3 %}
+                    <li class="tab-3">{{ settings.side_showcase_tab_3}}</li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="side-showcase-products">
+            {% element 'snippets/showcase-power-display' %}
+        </div>
+    </div>
+    
+</aside>
+<div class="shadow side-showcase"></div>
+
+
+{% endif %}

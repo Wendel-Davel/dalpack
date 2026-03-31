@@ -1,0 +1,103 @@
+{% element 'snippets/banner-home' %}
+
+{% if settings.tarja_beneficios %} 
+    {% element 'snippets/tarja-beneficios' %}
+{% endif %}
+
+{% element 'snippets/banner-mini' %}   
+
+
+
+{# Primary showcase #}
+{% element 'showcase' {
+    'slide'             : settings.showcase_slide_1,
+    'rand'              : settings.showcase_rand_products,
+    'type'              : settings.showcase_type_1,
+    'quantity'          : settings.showcase_quantity_1,
+    'category'          : settings.showcase_category_1,
+    'titleShowcase'     : settings.showcase_title_1,
+    'descShowcase'     : settings.showcase_desc_1,
+    'valOrder'          : settings.position_showcase_first,
+    'variants'          : true,
+} %}
+
+
+
+
+
+{# Second showcase #}
+{% element 'showcase' {
+    'slide'             : settings.showcase_slide_2,
+    'rand'              : settings.showcase_rand_products,
+    'type'              : settings.showcase_type_2,
+    'quantity'          : settings.showcase_quantity_2,
+    'category'          : settings.showcase_category_2,
+    'titleShowcase'     : settings.showcase_title_2,
+    'descShowcase'     : settings.showcase_desc_2,
+    'valOrder'          : settings.position_showcase_second,
+    'variants'          : true,
+
+} %}
+
+
+
+{# Last showcase #}
+{% element 'showcase' {
+    'slide'             : settings.showcase_slide_3,
+    'rand'              : settings.showcase_rand_products,
+    'type'              : settings.showcase_type_3,
+    'quantity'          : settings.showcase_quantity_3,
+    'category'          : settings.showcase_category_3,
+    'titleShowcase'     : settings.showcase_title_3,
+    'descShowcase'     : settings.showcase_desc_3,
+    'valOrder'          : settings.position_showcase_third,
+    'variants'          : true,
+
+} %}
+
+{% element 'snippets/banner-vitrine' %}
+{% if settings.show_navegue_categoria or (banners.extra6.slides|length > 0) %}
+    {% element 'snippets/slide-departament' %}    
+{% endif %}
+
+{% element 'snippets/banner-vitrine-dois' %}
+
+{% element 'showcase' {
+    'slide'             : settings.showcase_slide_4,
+    'rand'              : settings.showcase_rand_products,
+    'type'              : settings.showcase_type_4,
+    'quantity'          : settings.showcase_quantity_4,
+    'category'          : settings.showcase_category_4,
+    'titleShowcase'     : settings.showcase_title_4,
+    'descShowcase'      : settings.showcase_desc_4,
+    'valOrder'          : settings.position_showcase_fourth,
+    'variants'          : true,
+
+} %}
+
+
+
+{% element 'snippets/section-personalizados' %}
+{% element 'snippets/section-presentes' %}
+
+
+{% if settings.news_active %} {% element 'snippets/newsletter' %} {% endif %}
+
+{% element 'snippets/section-sobre-nos' %}
+
+
+{% for pages in pages.custom %}
+    {% if pages.info == "depoimentos_de_clientes" and settings.show_reviews %}
+        <div class="section-avaliacoes slide-has-dots" style="order: {{ settings.position_reviews }}">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="title-section">
+                        Quem já comprou e recomenda
+                    </h2>
+                </div>
+                {% element 'CustomerReview.reviews' %}
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+

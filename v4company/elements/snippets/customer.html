@@ -1,0 +1,25 @@
+<div class="customer customer-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 login" data-tray-tst="saudacao">
+                <span class="tray-hide" data-logged-user="true">
+                    Bem-vindo <span data-customer="name"></span>,
+                    <a href="{{ links.logout }}">sair</a></li>
+                </span>
+                <span class="tray-hide" data-logged-user="false">
+                    Olá, seja bem-vindo(a)!
+                </span>
+            </div>
+            <div class="col-sm-6 orders">
+                <a href="{{ links.orders }}" data-tray-tst="meus_pedidos">Meus pedidos</a>
+                <a href="{{ links.central }}" data-tray-tst="meu_cadastro">Central do Cliente</a>
+                <span class="tray-hide" data-logged-user="true">
+                    <a href="{{ links.logout }}">Logout</a>
+                </span>
+                <span class="tray-hide" data-logged-user="false">
+                    <a href="{{ links.login }}">Login/Cadastro</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="plugoo-floating-button">
+    <div class="floating-container">
+        {% if not utils.is_mobile %}
+            <div class="floating-product-info">
+                <div class="product-image">
+                    <img src="{{product.images[0].small}}" alt="{{ product.name }}">
+                </div>
+                <div class="product-info">
+                    <span>{{ product.name }}</span>
+                    <span class="floating-price">{{ settings.currency }}{{ product.price | currency }}</span>
+
+                </div>
+            </div>
+        {% endif %}
+        <div class="floating-actions">
+            <p class="floating-buy"> {% if settings.floating_buy_button_text %} {{ settings.floating_buy_button_text }}{% else %} COMPRAR AGORA {% endif %} </p>
+        </div>
+    </div>
+</div>

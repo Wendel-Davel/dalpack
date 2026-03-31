@@ -1,0 +1,45 @@
+{% if not settings.use_performance_mode %}
+    {% set lazy_class = swiper ? 'swiper-lazy' : 'lazyload' %}
+    {% set valueCount = settings.value_count_mini_banner %}
+    {% set slide = 0 %}
+    {% set show = settings.show_mini_banner %}
+    {% set miniBanners = utils.is_mobile ? banners.extra2.slides : banners.extra1.slides %}
+
+    {% if show %}
+        {% if utils.is_mobile ? settings.mini_mobile_1 or settings.mini_mobile_2 or settings.mini_mobile_3 or settings.mini_mobile_4 : settings.mini_1 or settings.mini_2 or settings.mini_3 or settings.mini_4 %}
+        <div class="container {{ slide ? 'showcase-slide' : 'mini-banner-   ' }}" style="order: {{ settings.position_mini_banners }}">
+            <div class="{{ slide ? 'swiper-container' : 'showcase-content' }}">
+                <div id="mini-banner" class="banners-grid flex four {{ slide ? 'swiper-wrapper' }}">
+                    {% for i in 1..valueCount %}
+                        {% set img_mini = utils.is_mobile ?  attribute(settings, 'mini_mobile_'~i) : attribute(settings, 'mini_'~i) %}
+                        {% set link_mini = attribute(settings, 'mini_link_'~i) %}
+                            {% if img_mini %}
+                                <div class="item {{ slide ? 'swiper-slide' }} ">
+                                    <a href="{{ link_mini }}" rel="noopener noreferrer">
+                                        <img {% if notLazy %}class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-{% endif %}src="{{ asset(img_mini) }}" alt="Banner">
+                                    </a>
+                                </div>
+                            {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        {% if miniBanners %}
+            <div class="container {{ slide ? 'showcase-slide' : 'mini-banner-   ' }}" style="order: {{ settings.position_mini_banners }}">
+                <div class="{{ slide ? 'swiper-container' : 'showcase-content' }}">
+                    <div id="mini-banner" class="banners-grid flex four {{ slide ? 'swiper-wrapper' }}">
+                        {% for miniBanner in miniBanners|slice(0, settings.limited_max_mini_banner) %}
+                            <div class="item {{ slide ? 'swiper-slide' }} ">
+                                <a href="{{ miniBanner.link }}" rel="noopener noreferrer">
+                                    <img {% if notLazy %}class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-{% endif %}src="{{ miniBanner.image }}" alt="Banner">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endif %}

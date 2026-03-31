@@ -1,0 +1,13 @@
+<div class="product-menu-sale-content swiper-container">
+    <div class="swiper-wrapper">
+        {% for item in products %}
+            <li class="item swiper-slide flex">
+
+                {% element 'snippets/product' { 'product' : item } %}
+                
+            </li>
+        {% endfor %}
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>

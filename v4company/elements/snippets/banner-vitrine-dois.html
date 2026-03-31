@@ -1,0 +1,40 @@
+{% if not settings.use_performance_mode%}
+    {% set lazy_class = swiper ? 'swiper-lazy' : 'lazyload' %}
+    {% set show = settings.show_vitrine_2 %}
+    {% set bannerVitrineDois = banners.extra5.slides %}
+
+    {% if show %}
+        {% if utils.is_mobile ? (settings.vitrine2_mobile_1 or settings.vitrine2_mobile_2) : (settings.vitrine2_1 or settings.vitrine2_2) %}
+                <div class="container" style="order: {{ settings.position_vitrine_banners_second }}">
+                    <div class="banners-grid flex justify-between two">
+                        {% for i in 1..2 %}
+                            {% set img_vitrine = (utils.is_mobile ? attribute(settings, 'vitrine2_mobile_'~i) : attribute(settings, 'vitrine2_'~i)) %}
+                            {% set link_vitrine = attribute(settings, 'vitrine2_link_'~i) %}
+
+                            {% if img_vitrine %}
+                            <div class="item">
+                                <a href="{{ link_vitrine }}" rel="noopener noreferrer">
+                                    <img {% if notLazy %}class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-{% endif %}src="{{ asset( img_vitrine ) }}" alt="Banner">
+                                </a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+        {% endif %}
+    {% else %}
+        {% if bannerVitrineDois %}
+        <div class="container" style="order: {{ settings.position_vitrine_banners_second }}">
+            <div class="banners-grid flex justify-between two">
+                {% for banner_vitrine in bannerVitrineDois|slice(0, 2) %}
+                    <div class="item">
+                        <a href="{{ banner_vitrine.link }}" rel="noopener noreferrer">
+                            <img {% if notLazy %}class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-{% endif %}src="{{ banner_vitrine.image }}" alt="Banner">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+{% endif %}

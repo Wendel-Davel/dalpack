@@ -1,0 +1,14 @@
+<div class="showcase-catalog">
+    <ul class="list-product flex f-wrap">
+        {% for item in products %}
+
+            <li class="item flex {{ settings.fixed_actions ? 'item-actions-fixed' }}">
+                {% element 'snippets/product' {
+                    product : item,
+                    variants: variants,
+                } %}
+            </li>
+
+        {% endfor %}
+    </ul>
+</div>

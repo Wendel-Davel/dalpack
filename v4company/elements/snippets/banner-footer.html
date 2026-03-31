@@ -1,0 +1,33 @@
+{% if not settings.use_performance_mode %}
+    {% set show = settings.show_banner_footer %}
+    {% set bannerFooter = utils.is_mobile ? banners.extra9 : banners.footer %}
+
+    {% if show %}
+        {% set img_footer = utils.is_mobile ? attribute(settings, 'banner_footer_mobile_img') : attribute(settings, 'banner_footer_img') %}
+        {% if img_footer %}
+            {% set lazy_class = swiper ? 'swiper-lazy' : 'lazyload' %}
+            <div class="container">
+                <div class="banners-footer flex justify-between">
+                    <div class="item">
+                        <a href="{{ settings.banner_footer_link }}" rel="noopener noreferrer">
+                            <img class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-src="{{ asset( img_footer ) }}" alt="Banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if bannerFooter %}
+            {% set lazy_class = swiper ? 'swiper-lazy' : 'lazyload' %}
+            <div class="container">
+                <div class="banners-footer flex justify-between">
+                    <div class="item">
+                        <a href="{{ bannerFooter.link }}" rel="noopener noreferrer">
+                            <img class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-src="{{ bannerFooter.src }}" alt="Banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endif %}

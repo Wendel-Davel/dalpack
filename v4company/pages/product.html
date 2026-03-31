@@ -1,0 +1,776 @@
+{% set showZoom = 'zoom-on' in productHelper.gallery %} {% if
+ProgressiveDiscounts %}
+<div class="progressive-discount-banners">
+  {% for discount in ProgressiveDiscounts %} {% if discount.banner %}
+  <img src="{{ discount.banner }}" alt="{{ discount.name }}" />
+  {% endif %} {% endfor %}
+</div>
+{% endif %} {% element 'snippets/breadcrumb' %} {% element 'schema' { 'product'
+: product } %} {% if productHelper.bundle() %}
+<div class="section-buy-together compre-junto">
+  <div class="section-header">
+    <h2 class="title-section">Aproveite e compre junto</h2>
+  </div>
+  <div class="product-cross-sell">{{ productHelper.bundle() }}</div>
+</div>
+{% endif %}
+<div id="product-wrapper" class="product-wrapper">
+  <div class="product-box">
+    {% set discount = product.price_offer > 0 ? (100 - (product.price_offer /
+    product.price) * 100) : false %}
+    <div class="product-gallery{{ showZoom ? ' zoom-true' }}">
+      <div class="product-images swiper-container">
+        {% if product.video %}
+        <div
+          class="product-video"
+          data-url="{{ product.video }}"
+          aria-label="Ver v&iacute;deo"
+        >
+          <i class="icon icon-youtube"></i>
+          <span class="text">Ver v&iacute;deo</span>
+        </div>
+        {% endif %}
+        <div class="swiper-wrapper">
+          {% for images in product.images %}
+          <div
+            class="image swiper-slide {% if loop.first -%} active {%- endif %}"
+            data-index="{{ loop.index }}"
+          >
+            <div class="zoom">
+              <img
+                class="swiper-lazy"
+                data-src="{{ images.full }}"
+                alt="{{ product.name }}"
+              />
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <ul
+        class="product-thumbs swiper-carousel {% if product.images | length > 4 %} show-arrows {% endif %}"
+      >
+        <div class="thumbs-list swiper-container hide-dots-desk">
+          <div class="swiper-wrapper">
+            {% if product.images | length > 1 %} {% for images in product.images
+            %}
+            <li
+              class="swiper-slide {% if loop.first -%} active {%- endif %}"
+              data-index="{{ loop.index }}"
+            >
+              <div class="thumb">
+                <img src="{{ images.medium }}" alt="{{ product.name }}" />
+              </div>
+            </li>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="dots"></div>
+        </div>
+        <div class="controls">
+          <div class="prev">
+            <i class="icon icon-arrow-left"></i>
+          </div>
+          <div class="next">
+            <i class="icon icon-arrow-right"></i>
+          </div>
+        </div>
+      </ul>
+    </div>
+
+    <div
+      class="product-form"
+      {%
+      if
+      settings.float_buy_button
+      %}
+      id="product-form-scroll"
+      {%
+      endif
+      %}
+    >
+      <div class="product-loader loader">
+        <div class="spinner">
+          <div class="double-bounce-one"></div>
+          <div class="double-bounce-two"></div>
+        </div>
+        <div class="message">Atualizando informa&ccedil;&otilde;es ...</div>
+      </div>
+
+      <div class="product-main-info">
+        <!-- {% if product.reference %}
+        <div class="product-sku">
+          Ref:
+          <span
+            class="product-sku ref"
+            id="product-reference"
+            data-url="/mvc/store/product/variant_reference/?loja={{ store.id }}"
+            >{{ product.reference }}</span
+          >
+        </div>
+        {% endif %} -->
+
+        {% if settings.show_product_page_promotion and not
+        settings.use_performance_mode %} {% if product.available and
+        product.stock > 0 and product.price_offer and product.end_promotion !=
+        '0000-00-00' %}
+
+        <!-- <div class="plugoo-countdown pg-product-countdown">
+          <div>
+            <div class="pg-icon">
+              <svg
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"
+                />
+                <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z" />
+              </svg>
+            </div>
+            <div class="pg-timer">
+              <div class="pg-timer-title">Oferta termina em:</div>
+              <div
+                class="pg-timer-content"
+                data-start="{{ product.start_promotion  }}"
+                data-end="{{ product.end_promotion }}"
+              >
+                <div id="pg-timer-added"></div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        {% endif %} {% endif %} {% if not product.upon_request and
+        product.available and productHelper.wishlist() %}
+        <div class="wishlist" title="Adicionar aos favoritos">
+          {{ productHelper.wishlist() }}
+        </div>
+        {% endif %}
+      </div>
+      <div
+        class="product-tags {% if product.free_shipping -%} has-free-shipping-tag {%- endif %}"
+        data-tags-count="{{ tags_count > 4 ? 4 : tags_count }}"
+      >
+        {% set replaceTags = {'src=': 'width="119" height="22" alt="Selo" src='}
+        %} {% if product.new %}
+        <div class="tag new">
+          <p>Novidade</p>
+        </div>
+        {% endif %} {% if product.featured %}
+        <div class="tag featured">
+          <p>Destaque</p>
+        </div>
+        {% endif %} {% if product.free_shipping %}
+        <div class="tag free-shipping">
+          <p>Frete Gr&aacute;tis</p>
+        </div>
+        {% endif %} {# {% if tags_count < 5 and discount %}
+        <div class="tag discount">
+          <span class="tag-text"> {{ discount | number_format }}% Desc </span>
+        </div>
+        {% endif %} #} {% if product.additional_button and
+        Image('additional_button') %}
+        <div class="tag extra">
+          {{ Image('additional_button') | replace(replaceTags) }}
+        </div>
+        {% endif %}
+      </div>
+
+      <h1 class="product-name">{{ product.name }}</h1>
+
+      {% if settings.show_product_review %} {% element 'snippets/rating' {
+      'review': product.ranking, 'total' : true } %} {% endif %} {% if
+      product.additional_message %}
+
+      <div class="product-additional-message">
+        {{ product.additional_message }}
+      </div>
+
+      {% endif %} {% if product.available and (product.stock > 0 or
+      settings.without_stock_sale) and not product.upon_request %} {% set
+      form_classes = [] %} {% if product.is_kit %} {% set form_classes =
+      form_classes | merge(['is-kit']) %} {% endif %} {% if
+      productHelper.gifts() %} {% set form_classes = form_classes |
+      merge(['has-gift']) %} {% endif %}
+
+      <form id="form_comprar" {% if form_classes | length>
+        0 %} class="{{ form_classes | join (' ') }}" {% endif %} method="post"
+        data-app="product.buy-form" data-id="{{ product.id }}" action="{{
+        links.cart_add ~ product.id }}"> {% set productDetails =
+        productHelper.details() %} {% if 'class="dados-campo infoLancamento"' in
+        productDetails %}
+        <div class="product-info product-release-date">
+          <span class="bold">Data de lan&ccedil;amento:</span> {{
+          product.release_date | date('d/m/Y') }}
+        </div>
+        {% endif %}
+
+        <div class="product-price product-price-tray">
+          {{ productHelper.pricing() }}
+        </div>
+
+        {% if product.variants %}
+        <div class="product-variants">
+          <div class="tray-content">{{ productHelper.variants() }}</div>
+        </div>
+
+        {% endif %}
+
+        <div class="product-gifts">{{ productHelper.gifts() }}</div>
+
+        {% if product.is_kit %}
+        <div class="product-kit">
+          <div class="tray-content">{{ productHelper.kit() }}</div>
+          <div class="variant-error error-message" style="display: none">
+            Por favor, selecione as varia&ccedil;&otilde;es antes de prosseguir.
+          </div>
+        </div>
+
+        {% endif %}
+        <div id="ambientes-wrapper"></div>
+        {% if product.additional_information %}
+        <div class="product-additional-fields">
+          {{ product.additional_information }}
+          <div
+            class="additional-field-required error-message"
+            style="display: none"
+          >
+            Por favor, preencha os campos acima.
+          </div>
+        </div>
+        {% endif %} {% if productHelper.banner() %} {% set batch_promotion =
+        productHelper.banner() %}
+        <div
+          class="product-batch-promotion {% if 'img' not in batch_promotion %} text-promotion {% endif %}"
+        >
+          {{ batch_promotion }}
+        </div>
+        {% endif %} {% if ProgressiveDiscounts %}
+        <div class="product-progressive-discount">
+          <div class="icon-svg">
+            <svg
+              width="24px"
+              height="24px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14.25 9L9.75 15M15 14.25C15 14.6642 14.6642 15 14.25 15C13.8358 15 13.5 14.6642 13.5 14.25C13.5 13.8358 13.8358 13.5 14.25 13.5C14.6642 13.5 15 13.8358 15 14.25ZM10.5 9.75C10.5 10.1642 10.1642 10.5 9.75 10.5C9.33579 10.5 9 10.1642 9 9.75C9 9.33579 9.33579 9 9.75 9C10.1642 9 10.5 9.33579 10.5 9.75ZM21.75 12C21.75 13.2 20.1 14.1 19.65 15.15C19.2 16.275 19.725 18.075 18.9 18.9C18.075 19.725 16.275 19.2 15.15 19.65C14.1 20.1 13.2 21.75 12 21.75C10.8 21.75 9.9 20.1 8.85 19.65C7.725 19.2 5.925 19.725 5.1 18.9C4.275 18.075 4.8 16.275 4.35 15.15C3.9 14.1 2.25 13.2 2.25 12C2.25 10.8 3.9 9.9 4.35 8.85C4.8 7.725 4.275 5.925 5.1 5.1C5.925 4.275 7.725 4.8 8.85 4.35C9.9 3.9 10.8 2.25 12 2.25C13.2 2.25 14.1 3.9 15.15 4.35C16.275 4.8 18.075 4.275 18.9 5.1C19.725 5.925 19.2 7.725 19.65 8.85C20.1 9.9 21.75 10.8 21.75 12Z"
+                stroke="#3A52EE"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="discount-content">
+            <div class="title">
+              Produto com desconto progressivo
+              <div class="tooltip">
+                <i class="icon icon-help"></i>
+                <div class="tooltip-content">
+                  Somente o maior desconto ser&aacute; aplicado na
+                  finaliza&ccedil;&atilde;o do pedido.
+                </div>
+              </div>
+            </div>
+            <ul class="discounts">
+              {% for discount in ProgressiveDiscounts %}
+              <li class="discount" data-name="{{ discount.name }}">
+                {{ discount.description }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %} {% if productHelper.bonus() and 'idBonusVariacao' in
+        productHelper.bonus() %}
+        <div class="product-reward">{{ productHelper.bonus() }}</div>
+        {% endif %}
+
+        <div class="actions">
+          <div class="cont-quant">
+            <div class="product-quantity qtd-prod">
+              <button type="button" class="qty-minus" data-action="minus">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="2"
+                  viewBox="0 0 16 2"
+                  fill="none"
+                >
+                  <path
+                    d="M1 1H15"
+                    stroke="#6B7280"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <input type="number" name="quant" value="1" min="1" step="1" />
+              <button type="button" class="qty-plus" data-action="plus">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M8 1V15M1 8H15"
+                    stroke="#6B7280"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <button type="submit" class="btn-productPage add-to-cart botao">
+                            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_2185_7082)">
+                  <path
+                    d="M0.833008 0.833374H4.16634L6.39967 11.9917C6.47588 12.3754 6.6846 12.72 6.9893 12.9653C7.29399 13.2106 7.67526 13.3409 8.06634 13.3334H16.1663C16.5574 13.3409 16.9387 13.2106 17.2434 12.9653C17.5481 12.72 17.7568 12.3754 17.833 11.9917L19.1663 5.00004H4.99967M8.33301 17.5C8.33301 17.9603 7.95991 18.3334 7.49967 18.3334C7.03944 18.3334 6.66634 17.9603 6.66634 17.5C6.66634 17.0398 7.03944 16.6667 7.49967 16.6667C7.95991 16.6667 8.33301 17.0398 8.33301 17.5ZM17.4997 17.5C17.4997 17.9603 17.1266 18.3334 16.6663 18.3334C16.2061 18.3334 15.833 17.9603 15.833 17.5C15.833 17.0398 16.2061 16.6667 16.6663 16.6667C17.1266 16.6667 17.4997 17.0398 17.4997 17.5Z"
+                    stroke="#F9F9F9"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2185_7082">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              Comprar
+
+            </button>
+          </div>
+
+          {% set prodTitle = product.name |convert_encoding('UTF-8', '
+          iso-8859-1') %} {% set whatsMessage = settings.whatsprod_text
+          |convert_encoding('UTF-8', ' iso-8859-1') %} {% if
+          settings.show_whats_prod_page %}
+          <div class="content-wp-prod">
+            <a
+              class="wp-prod"
+              target="_blank"
+              href="https://api.whatsapp.com/send?phone=55{{ settings.whatsprod_number|replace({'(': '', ')': '', '-': '', ' ': '' })}}&amp;text={{ whatsMessage|url_encode }}%0D%0DProduto%3A+{{ prodTitle }}%0D%0DLink%3A+{{ product.link|url_encode }}"
+            >
+              <svg
+                id="Bold"
+                enable-background="new 0 0 24 24"
+                height="512"
+                viewBox="0 0 24 24"
+                width="512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m17.507 14.307-.009.075c-2.199-1.096-2.429-1.242-2.713-.816-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.293-.506.32-.578.878-1.634.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.576-.05-.997-.042-1.368.344-1.614 1.774-1.207 3.604.174 5.55 2.714 3.552 4.16 4.206 6.804 5.114.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z"
+                />
+                <path
+                  d="m20.52 3.449c-7.689-7.433-20.414-2.042-20.419 8.444 0 2.096.549 4.14 1.595 5.945l-1.696 6.162 6.335-1.652c7.905 4.27 17.661-1.4 17.665-10.449 0-3.176-1.24-6.165-3.495-8.411zm1.482 8.417c-.006 7.633-8.385 12.4-15.012 8.504l-.36-.214-3.75.975 1.005-3.645-.239-.375c-4.124-6.565.614-15.145 8.426-15.145 2.654 0 5.145 1.035 7.021 2.91 1.875 1.859 2.909 4.35 2.909 6.99z"
+                />
+              </svg>
+              {{ settings.whats_button_text }}
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </form>
+
+      <form
+        id="form_comprar"
+        style="display: none"
+        class=" pageProduct-form {{ form_classes | length > 0 ? form_classes | join (' ') }}"
+        method="post"
+        data-app="product.buy-form"
+        data-id="{{ product.id }}"
+        action="{{ links.cart_add ~ product.id }}"
+      >
+        {% if productHelper.bonus() and 'idBonusVariacao' in
+        productHelper.bonus() %}
+        <div class="pageProduct-bonusScore">{{ productHelper.bonus() }}</div>
+        {% endif %} {% if ProgressiveDiscounts %}
+        <div class="pageProduct-progressiveDiscount">
+          <p class="progressiveDiscount-text">
+            Produto com desconto progressivo
+          </p>
+          <ul class="progressiveDiscount-list">
+            {% for discount in ProgressiveDiscounts %}
+            <li
+              class="progressiveDiscount-item"
+              data-name="{{ discount.name }}"
+            >
+              {{ discount.description }}
+            </li>
+            {% endfor %}
+          </ul>
+          {% if ProgressiveDiscounts|length > 1 %}
+          <p class="progressiveDiscount-alert">
+            <b>Atenção!</b> Somente o maior desconto ser&aacute; aplicado na
+            finaliza&ccedil;&atilde;o do pedido.
+          </p>
+          {% endif %}
+        </div>
+        {% endif %} {% if product.variants %}
+        <div class="pageProduct-variants" data-has-variations>
+          <div class="variants-choice serverTray-content">
+            {{ productHelper.variants() }}
+          </div>
+        </div>
+        {% endif %} {% if productHelper.gifts() %}
+        <div class="pageProduct-gifts serverTray-content">
+          <p class="pageProduct-giftsText">BRINDE DO PRODUTO</p>
+          {{ productHelper.gifts() }}
+        </div>
+        {% endif %} {% if product.is_kit %}
+        <div class="pageProduct-kit">
+          <div class="serverTray-content">{{ productHelper.kit() }}</div>
+          <div class="error-kit error-message" style="display: none">
+            Por favor, selecione as varia&ccedil;&otilde;es antes de prosseguir.
+          </div>
+        </div>
+        {% endif %} {% if product.additional_information %}
+        <div class="pageProduct-fieldsAdditional">
+          {{ product.additional_information }}
+          <div
+            class="fieldsAdditional-required error-message"
+            style="display: none"
+          >
+            Por favor, preencha os campos acima.
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="pageProduct-price serverTray-content">
+          {{ productHelper.pricing() }}
+        </div>
+  
+
+        {% if not product.upon_request and product.available and
+        productHelper.wishlist() %}
+        <button
+          class="pageProduct-wishlist"
+          type="button"
+          title="Adicionar à Lista de Desejos"
+        >
+          {{ productHelper.wishlist() }}
+        </button>
+        {% endif %} {% if product.additional_message %}
+        <p class="pageProduct-additionalMessage">
+          {{ product.additional_message }}
+        </p>
+        {% endif %}
+
+        <div class="pageProduct-buy serverTray-content" data-buy-product="box">
+          <input
+            class="buy-quantityTop"
+            type="button"
+            id="more"
+            value="+"
+            data-quantity
+          />
+          <input
+            class="buy-quantityDown"
+            type="button"
+            id="less"
+            value="-"
+            data-quantity
+          />
+          {{ productHelper.form() }}
+        </div>
+      </form>
+       {% if discount %}
+        <div class="tag-discount">{{ discount | number_format }}% OFF à vista</div>
+        {% endif %}
+      {% if productHelper.shipping() %}
+      <div class="product-shipping">
+        {{ productHelper.shipping() }}
+        <div class="topo">
+          <span class="info">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="15"
+              viewBox="0 0 17 15"
+              fill="none"
+            >
+              <path
+                d="M10.9091 10.2045V1.55C10.9091 1.10817 10.5509 0.75 10.1091 0.75L0.8 0.75C0.358172 0.75 0 1.10817 0 1.55L0 9.40455C0 9.84637 0.358173 10.2045 0.800001 10.2045H10.9091ZM10.9091 10.2045H15.2C15.6418 10.2045 16 9.84637 16 9.40454V6.89955C16 6.68738 15.9157 6.4839 15.7657 6.33387L14.0525 4.62068C13.9025 4.47065 13.699 4.38636 13.4868 4.38636H11.7091C11.2673 4.38636 10.9091 4.74454 10.9091 5.18636V10.2045ZM5.09091 12.0227C5.09091 13.0269 4.27688 13.8409 3.27273 13.8409C2.26857 13.8409 1.45455 13.0269 1.45455 12.0227C1.45455 11.0186 2.26857 10.2045 3.27273 10.2045C4.27688 10.2045 5.09091 11.0186 5.09091 12.0227ZM14.5455 12.0227C14.5455 13.0269 13.7314 13.8409 12.7273 13.8409C11.7231 13.8409 10.9091 13.0269 10.9091 12.0227C10.9091 11.0186 11.7231 10.2045 12.7273 10.2045C13.7314 10.2045 14.5455 11.0186 14.5455 12.0227Z"
+                stroke="#5FBB51"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Frete e prazo de entrega
+          </span>
+          <a href="http://">Não sei meu CEP</a>
+        </div>
+
+        <form class="shipping-form">
+          <div class="form-input">
+            <label for="zip" class="sr-only">CEP</label>
+            <input
+              type="tel"
+              class="input zip-code-mask"
+              id="zip"
+              name="zip"
+              minlength="9"
+              maxlength="9"
+              placeholder="Informe seu cep"
+              required
+            />
+          </div>
+          <button type="submit" class="submit-shipping">Calcular</button>
+        </form>
+
+        <div class="result"></div>
+      </div>
+      {% endif %} {% if 'class="availability"' in productDetails %}
+      <div class="product-info product-availability">
+        <span class="bold">Estoque:</span>
+        <strong>{{ product.availability }}</strong>
+      </div>
+      {% endif %} {% if productHelper.social() %}
+      <div class="product-social-share">{{ productHelper.social() }}</div>
+      {% endif %} {% else %} {# This helper verify if product is available or
+      not and generate the correct html #} {#
+      <div class="product-not-sale">{{ productHelper.pricing() }}</div>
+      #} {# This helper verify if product is available or not and generate the
+      correct html #}
+      <div class="product-not-sale pageProduct-outOfStock">
+        {% if product.variants %} {{ productHelper.variants() }} {% endif %} {%
+        set pricingWithEncode %} {{ productHelper.pricing() | replace({
+        'botao-nao_indisponivel"' : 'botao-nao_indisponivel" data-unavailable =
+        "Este produto encontra-se indispon&iacute;vel"' }) | replace({
+        'botao-sob-consulta\'' : 'botao-sob-consulta\' data-under-request =
+        "Preencha o nosso formul&aacute;rio para consultar a disponibilidade
+        deste produto."'}) | replace({ 'botao_tire_duvidas"' :
+        'botao_tire_duvidas" data-button-under-request = "Preencher
+        formul&aacute;rio"' }) }} {% endset %} {{ pricingWithEncode }}
+      </div>
+
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="product-tabs">
+    {% element 'snippets/product-tabs' { 'product' : product } %}
+  </div>
+  {% element 'snippets/section-depoimentos' %}
+  {% if settings.news_active %} {% element 'snippets/newsletter' %} {% endif %}
+</div>
+{% if product.related_products and settings.enable_related_products %}
+<div class="section-product-related">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="title-section">Produtos relacionados</h2>
+    </div>
+    <div class="swiper-container hide-dots-desk">
+      <div class="list-product swiper-wrapper">
+        {% for item in product.related_products %}
+        <div class="item swiper-slide">
+          {% element 'snippets/product' { 'product' : item, 'slide' : true,
+          'variants': false } %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="prev">
+        <i class="icon icon-arrow-left"></i>
+      </div>
+      <div class="next">
+        <i class="icon icon-arrow-right"></i>
+      </div>
+      <div class="dots"></div>
+    </div>
+  </div>
+</div>
+{% endif %} {% if settings.history_position %} {% endif %} {% if
+settings.float_buy_button %} {% element 'snippets/floating-buy-button' %} {%
+endif %}
+<script>
+  function criarAccordionTrayKit() {
+    const trayKit = document.querySelector(".tray-kit");
+    if (!trayKit) return;
+
+    const trayTitle = trayKit.querySelector(".tray-kit-title");
+
+    trayTitle.addEventListener("click", () => {
+      trayKit.classList.toggle("active");
+    });
+  }
+
+  // Exemplo de execução após carregar
+  window.addEventListener("DOMContentLoaded", criarAccordionTrayKit);
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // seleciona todas as caixas de quantidade
+    const quantityContainers = document.querySelectorAll(".qtd-prod");
+
+    quantityContainers.forEach((container) => {
+      const input = container.querySelector('input[name="quant"]');
+      const btnPlus = container.querySelector(".qty-plus");
+      const btnMinus = container.querySelector(".qty-minus");
+
+      if (!input || !btnPlus || !btnMinus) return;
+
+      btnPlus.addEventListener("click", () => {
+        input.value = Number(input.value) + 1; // soma 1 corretamente
+        input.dispatchEvent(new Event("change", { bubbles: true })); // dispara evento Tray
+      });
+
+      btnMinus.addEventListener("click", () => {
+        let value = Number(input.value);
+        if (value > 1) {
+          input.value = value - 1;
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      });
+    });
+
+    // evita que o form envie valor errado
+    const forms = document.querySelectorAll("#form_comprar");
+    forms.forEach((form) => {
+      form.addEventListener("submit", (e) => {
+        const input = form.querySelector('input[name="quant"]');
+        if (input) {
+          // garante que o valor do input será usado
+          input.value = Number(input.value);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  (function waitForjQuery() {
+    if (typeof jQuery !== "undefined") {
+      function loadNewsOnProductPage() {
+        if (jQuery(".section-news").length) {
+          let dataFiles = jQuery("html").data("files");
+          let storeId = jQuery("html").data("store"); // pega o ID da loja do html
+
+          jQuery.ajax({
+            url: `/loja/busca_noticias.php?loja=${storeId}&${dataFiles}`,
+            method: "get",
+            success: function (response) {
+              let news = jQuery(jQuery(response).find(".noticias"));
+
+              console.log("Resposta completa do AJAX:", response);
+              console.log("Posts encontrados:", news.length);
+
+              if (!news.length) {
+                console.log("Nenhum post encontrado. Removendo seção-news.");
+                jQuery(".section-news").remove();
+                return;
+              }
+
+              let target = jQuery(
+                ".section-news .news-content .swiper-wrapper"
+              );
+
+              news.find("li").each(function () {
+                let content = jQuery(this).html();
+                jQuery(this).replaceWith(
+                  `<div class="swiper-slide"><div class="box-noticia">${content}</div></div>`
+                );
+              });
+
+              target.append(news.contents());
+
+              new Swiper(".section-news .news-content", {
+                loop: true,
+                lazy: { loadPrevNext: false },
+                navigation: {
+                  nextEl: ".news-content .swiper-button-next",
+                  prevEl: ".news-content .swiper-button-prev",
+                },
+                breakpoints: {
+                  0: {
+                    slidesPerView: 1.2,
+                    centeredSlides: true,
+                    grabCursor: true,
+                  },
+                  550: {
+                    slidesPerView: 1.4,
+                    centeredSlides: true,
+                    grabCursor: true,
+                  },
+                  768: { slidesPerView: 2 },
+                  1300: { slidesPerView: 3 },
+                  1500: { slidesPerView: 3 },
+                  1700: { slidesPerView: 4 },
+                  1900: { slidesPerView: 5 },
+                },
+              });
+            },
+            error: function (err) {
+              console.error("Erro no AJAX:", err);
+            },
+          });
+        }
+      }
+
+      // Executa quando o documento estiver pronto
+      jQuery(document).ready(loadNewsOnProductPage);
+    } else {
+      // tenta novamente em 50ms se jQuery ainda não existir
+      setTimeout(waitForjQuery, 50);
+    }
+  })();
+</script>
+
+<style>
+  .breadcrumb {
+    margin-bottom: 32px;
+  }
+
+  .s-depoimentos::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
+    position: absolute;
+    background-color: #035a91;
+    left: -400px;
+  }
+  .s-depoimentos::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    bottom: 0px;
+    position: absolute;
+    background-color: #035a91;
+    right: -400px;
+  }
+
+  @media (max-width: 900px) {
+    .s-depoimentos .swiper-button-next,
+    .swiper-button-prev {
+      display: flex !important;
+    }
+  }
+  @media (max-width: 560px) {
+    .s-depoimentos::before {
+      right: -340px;
+    }
+    .s-depoimentos::after {
+      left: -340px;
+    }
+  }
+</style>

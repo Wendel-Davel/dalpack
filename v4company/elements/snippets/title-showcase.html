@@ -1,0 +1,25 @@
+{% set title = 'Produtos' %}
+
+{% set showcase = type %}
+
+
+{% if showcase == 'top_seller' %} 
+{% set title = 'Mais Vendidos' %}
+
+{% elseif showcase == 'new'  %}
+{% set title = 'Lançamentos' %}
+
+{% elseif showcase == 'featured'  %}
+{% set title = 'Imperdíveis' %}
+
+{% elseif showcase == 'free_shipping'  %}
+{% set title = 'Frete Grátis' %}
+
+{% elseif showcase == 'prod-vid' %}
+{% set title = 'Produtos do vídeo' %}
+
+{% elseif showcase == 'promotion'  %}
+{% set title = 'Promoção' %}
+
+{% endif %}
+{{ title }}

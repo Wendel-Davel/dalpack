@@ -1,0 +1,189 @@
+{% if settings.side_showcase_tab_1 %}
+
+{% set type = settings.side_showcase_type_tab_1 %}
+{% set category = settings.side_showcase_prod_tab_1 %}
+
+{% if type %}
+
+    {% set quantity = quantity | default(5) %}
+    {% set slide = slide %}
+
+    {% if type == 'top_seller' %}
+
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% elseif type == 'category'%}
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : rand,
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% else %}
+
+        {% set products = Products({
+            'filter': [type, 'available'],
+            'limit' : quantity,
+            'order' : 'rand',
+            'categories' : category,
+        }) %}   
+        
+    {% endif %}
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+    {% if products | length > 0 %}
+            <div class="plugoo-side-products tab" id="tab-1">
+                <div class="container">
+                    <div class="content">
+                        <div class="products flex flex-column">
+                            {% for item in products %}
+                                {% element 'snippets/product-power-display' {
+                                    product : item
+                                } %}        
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+    {% endif %}
+        
+{% endif %}
+
+{% if settings.side_showcase_tab_2 %}
+
+
+{% set type = settings.side_showcase_type_tab_2 %}
+{% set category = settings.side_showcase_prod_tab_2 %}
+
+{% if type %}
+
+    {% set quantity = quantity | default(8) %}
+    {% set slide = slide %}
+
+    {% if type == 'top_seller' %}
+
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% elseif type == 'category'%}
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : rand,
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% else %}
+
+        {% set products = Products({
+            'filter': [type, 'available'],
+            'limit' : quantity,
+            'order' : 'rand',
+            'categories' : category,
+        }) %}   
+        
+    {% endif %}
+
+
+{% endif %}
+
+    <div class="plugoo-side-products tab" id="tab-2">
+        {% if settings.history_prods %}
+        <div class="container plugoo-products-history">
+            <div class="content">
+                <div class="products flex flex-column">
+                    <div class="empty">
+                        <span>Você ainda não visualizou nenhum produto.</span><br>
+                        <span>Confira algumas sugestões que podem ser de seu agrado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="container">
+            <div class="content">
+                <div class="products flex flex-column">
+                    {% for item in products %}
+                        {% element 'snippets/product-power-display' {
+                            product : item
+                        } %}        
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% if settings.side_showcase_tab_3 %}
+
+
+{% set type = settings.side_showcase_type_tab_3 %}
+{% set category = settings.side_showcase_prod_tab_3 %}
+
+{% if type %}
+
+    {% set quantity = quantity | default(8) %}
+    {% set slide = slide %}
+
+    {% if type == 'top_seller' %}
+
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% elseif type == 'category'%}
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : rand,
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% else %}
+
+        {% set products = Products({
+            'filter': [type, 'available'],
+            'limit' : quantity,
+            'order' : 'rand',
+            'categories' : category,
+        }) %}   
+        
+    {% endif %}
+
+
+{% endif %}
+    <div class="plugoo-side-products tab" id="tab-3">
+        <div class="container">
+            <div class="content">
+                <div class="products flex flex-column">
+                    {% for item in products %}
+                        {% element 'snippets/product-power-display' {
+                            product : item
+                        } %}        
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

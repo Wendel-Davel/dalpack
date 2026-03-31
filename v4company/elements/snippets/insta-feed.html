@@ -1,0 +1,93 @@
+{% if not settings.use_performance_mode %}
+   {% set lazy_class = swiper ? 'swiper-lazy' : 'lazyload' %}
+   {% set show = settings.show_instafeed %}
+   {% set insta_feed = utils.is_mobile ? banners.extra12.slides : banners.extra11.slides %}
+
+   {% if utils.is_mobile %}
+      {% set quantInsta = 0 %}
+
+      {% for i in 1..10 %}
+         {% set insta_image = attribute(settings, 'insta_mobile_0'~i) %}
+         {% if insta_image %}
+            {% set quantInsta = quantInsta + 1 %}
+         {% endif %}
+      {% endfor %}
+   {% endif %}
+
+   {% if show %}
+      <div class="instafeed-slide" style="order: {{ settings.position_instafeed }}">
+         <div {% if settings.layout != 'full' %} class="container" {% endif %}>
+            <div class="section-header">
+               <h2 class="title-section">
+                  {{settings.hashtag_instafeed}}
+               </h2>
+               <span class="sub-title">
+                  {{settings.title_instafeed}}
+                  <a href="https://www.instagram.com/{{settings.user_instafeed}}" target="_blank">@{{settings.user_instafeed}}</a>
+               </span>
+            </div>
+            <div class="{{utils.is_mobile ? (quantInsta >  2 ? 'swiper-container' : '') : 'swiper-container'}}">
+               <div class="instafeed-itens swiper-wrapper">
+                  {% for i in 1..10 %}
+                     {% set insta_image = utils.is_mobile ? attribute(settings, 'insta_mobile_0'~i) : attribute(settings, 'insta_0'~i) %}
+                     {% set insta_link = attribute(settings, 'insta_link_0'~i) %}
+                     {% set alt_title = 'Postagem '~i %}
+                     {% if insta_image %}
+                        <div class="item swiper-slide">
+                           <a href="{{ insta_link }}">
+                              <div class="instafeed-imagem">
+                                 <img class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-src="{{ asset( insta_image ) }}" alt="{{alt_title}}">
+                              </div>
+                           </a>
+                        </div>
+                     {% endif %}
+                  {% endfor %}
+               </div>
+               <div class="swiper-button-prev"></div>
+               <div class="swiper-button-next"></div>
+               <div class="dots">
+               </div>
+            </div>
+         </div>
+      </div>
+   {% else %}
+      {% if insta_feed %}
+         <div class="instafeed-slide" style="order: {{ settings.position_instafeed }}">
+            <div {% if settings.layout != 'full' %} class="container" {% endif %}>
+               <div class="section-header">
+                  <h2 class="title-section">
+                     {{settings.hashtag_instafeed}}
+                  </h2>
+                  <span class="sub-title">
+                     {{settings.title_instafeed}}
+                     <a href="https://www.instagram.com/{{settings.user_instafeed}}" target="_blank">@{{settings.user_instafeed}}</a>
+                  </span>
+               </div>
+               <div class="{{utils.is_mobile ? (insta_feed|length >  2 ? 'swiper-container' : '') : 'swiper-container'}}">
+                  <div class="instafeed-itens swiper-wrapper">
+                     {% for post in insta_feed %}
+                        {% set insta_image = post.image %}
+                        {% set insta_link = post.link %}
+                        {% set alt_title = post.label %}
+
+                        {% if insta_image %}
+                           <div class="item swiper-slide">
+                              <a href="{{ insta_link }}">
+                                 <div class="instafeed-imagem">
+                                    <img class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-src="{{ insta_image }}" alt="{{alt_title}}">
+                                 </div>
+                              </a>
+                           </div>
+                        {% endif %}
+                     {% endfor %}
+                  </div>
+                  <div class="swiper-button-prev"></div>
+                  <div class="swiper-button-next"></div>
+                  <div class="dots">
+                  </div>
+               </div>
+            </div>
+         </div>
+      {% endif %}
+   {% endif %}
+{% endif %}

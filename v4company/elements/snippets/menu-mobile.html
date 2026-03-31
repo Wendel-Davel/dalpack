@@ -1,0 +1,159 @@
+<div id="menu-mobile" class="menu-mobile">
+    <div class="close-box close-overlay">
+        <i class="icon icon-times"></i>
+    </div>
+
+	<li class="menu-user flex items-center p-5 justify-between">
+		<div class="flex items-center">
+			<div class="flex">
+				<span class="inline-block mr-3 h-16 w-16 rounded-full overflow-hidden bg-gray-100">
+					<svg class="h-full w-full text-gray-300" fill="currentColor" viewbox="0 0 24 24">
+						<path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"></path>
+					</svg>
+				</span>
+			</div>
+			<div class="ml-3 tray-hide" data-logged-user="false">
+				<div class="user-name">Olá, visitante</div>
+				<div class="user-links">
+					<a class="mr-1 underline" href="{{ links.login }}">entre</a>
+					ou
+					<a class="underline" href="{{ links.register }}">cadastre-se</a>
+				</div>
+			</div>
+			<div class="ml-3 tray-hide" data-logged-user="true">
+				<div class="text-2xl font-base leading-none">Olá, <p class="font-medium" data-customer="name"></p></div>
+				<div class="text-xl font-base leading opacity-50">
+					<a class="mr-2" href="{{ links.central }}">minha conta</a>
+					<a class="underline" href="{{ links.logout }}">sair</a>
+				</div>
+			</div>
+		</div>
+
+	</li>
+	<div class="menu-order inline-flex pt-6 px-8 items-center justify-center transform transition-all duration-150">
+		<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 c-text mr-5 opacity-50 transform" viewbox="0 0 20 20" fill="currentColor">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"  d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+		</svg>
+		<a href="{{ links.orders }}" class="text-2xl text-normal">Meus pedidos</a>
+	</div>
+
+	{% if settings.show_shipping and not settings.use_performance_mode %}  
+	            
+		<div class="track-order inline-flex p-6 px-8 items-center justify-start transform f-wrap transition-all duration-150">
+			<svg enable-background="new 0 0 35 35" height="512" viewBox="0 0 35 35" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m1.9126 24.5c0 .5527.4473 1 1 1h1.9835c.0114 2.2072 1.8087 4 4.0184 4s4.0071-1.7928 4.0184-4h8.9631c.0114 2.2072 1.8087 4 4.0184 4s4.0071-1.7928 4.0184-4h2.1544c.5527 0 1-.4473 1-1v-8.752c0-.7305-.3145-1.4268-.8643-1.9102-2.3638-1.8583-3.0774-3.3378-5.0671-3.3378h-4.2412v-4c0-.5527-.4473-1-1-1h-19c-.5527 0-1 .4473-1 1v12c0 .0142.0074.026.0081.04-.001.0176-.01.0322-.01.0498v5.9102zm7.002 3c-1.1143 0-2.0205-.9063-2.0205-2.0205s.9063-2.0205 2.0205-2.0205 2.0205.9063 2.0205 2.0205-.9063 2.0205-2.0205 2.0205zm17 0c-1.1143 0-2.0205-.9063-2.0205-2.0205s.9063-2.0205 2.0205-2.0205 2.0205.9063 2.0205 2.0205-.9063 2.0205-2.0205 2.0205zm1.2412-15c.8769 0 1.0156.5665 3.7471 2.8398.1172.1035.1846.252.1846.4082v7.752h-1.6065c-.0283 0-.052.0137-.0798.0161-.6907-1.2213-1.9863-2.0571-3.4866-2.0571-1.4963 0-2.7891.8314-3.4813 2.0474-.0112-.0004-.0203-.0064-.0314-.0064h-9.9795c-.0095 0-.0175.0051-.027.0054-.6923-1.2153-1.9849-2.0464-3.4808-2.0464-1.4963 0-2.7891.8314-3.4813 2.0474-.0112-.0004-.0203-.0064-.0314-.0064h-1.4893v-4h18.002c.5527 0 1-.4473 1-1v-6zm-23.2412-5h17v3.9902c0 .0034-.002.0063-.002.0098s.002.0063.002.0098v5.9902h-17z"></path></g></svg>
+			<p class="text-2xl text-normal">Rastrear pedido</p>
+		</div>
+
+		<div class="track-content pb-4 px-8 inline-flex justify-start transform f-wrap" style="display: none;">
+			<ul>
+				<label class="block text-xl font-medium text-gray-700">Digite o código de rastreio</label>
+				<form id="tracking" class="flex mt-1">
+					<input type="text" id="track-order-input" data-rastreio="{{ settings.rastreio_link }}" class="mr-2 px-6 py-4 focus:outline-none focus:ring  focus:border-blue-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+					<button type="submit" class="rounded-xl outline-none no-underline c-bt c-bt-h c-txt-bt c-txt-bt-h  text-xl font-medium inline-flex justify-center py-4 px-4 transition duration-500">
+						Buscar
+					</button>
+				</form>
+			</ul>
+		</div>
+	{% endif %}
+
+	{% set email = Translation('ag_email_1') %}
+	{% set phone = Translation('ag_telefone_1') %}
+
+	<div class="box-help-mobile">
+		<div class="title">
+			<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><g><g><circle cx="256" cy="378.5" r="25"></circle><path d="M256,0C114.516,0,0,114.497,0,256c0,141.484,114.497,256,256,256c141.484,0,256-114.497,256-256 C512,114.516,397.503,0,256,0z M256,472c-119.377,0-216-96.607-216-216c0-119.377,96.607-216,216-216 c119.377,0,216,96.607,216,216C472,375.377,375.393,472,256,472z"></path><path d="M256,128.5c-44.112,0-80,35.888-80,80c0,11.046,8.954,20,20,20s20-8.954,20-20c0-22.056,17.944-40,40-40 c22.056,0,40,17.944,40,40c0,22.056-17.944,40-40,40c-11.046,0-20,8.954-20,20v50c0,11.046,8.954,20,20,20 c11.046,0,20-8.954,20-20v-32.531c34.466-8.903,60-40.26,60-77.469C336,164.388,300.112,128.5,256,128.5z"></path></g></g></g></svg>
+			Atendimento
+		</div>
+		<ul style="display: none;">
+
+			{% if phone %}
+				{% set link = phone | replace({'(': '', ')': '', '-': '', ' ': ''}) %}
+				<li class="box-contact flex">
+					<svg height="512" viewBox="0 0 58 58" width="512" xmlns="http://www.w3.org/2000/svg"><g id="Page-1" fill="var(--cor_texto_footer)" fill-rule="evenodd"><g id="003---Call" fill="var(--cor_texto_footer)" fill-rule="nonzero" transform="translate(-1)"><path id="Shape" d="m25.017 33.983c-5.536-5.536-6.786-11.072-7.068-13.29-.0787994-.6132828.1322481-1.2283144.571-1.664l4.48-4.478c.6590136-.6586066.7759629-1.685024.282-2.475l-7.133-11.076c-.5464837-.87475134-1.6685624-1.19045777-2.591-.729l-11.451 5.393c-.74594117.367308-1.18469338 1.15985405-1.1 1.987.6 5.7 3.085 19.712 16.855 33.483s27.78 16.255 33.483 16.855c.827146.0846934 1.619692-.3540588 1.987-1.1l5.393-11.451c.4597307-.9204474.146114-2.0395184-.725-2.587l-11.076-7.131c-.7895259-.4944789-1.8158967-.3783642-2.475.28l-4.478 4.48c-.4356856.4387519-1.0507172.6497994-1.664.571-2.218-.282-7.754-1.532-13.29-7.068z"/><path id="Shape" d="m47 31c-1.1045695 0-2-.8954305-2-2-.0093685-8.2803876-6.7196124-14.9906315-15-15-1.1045695 0-2-.8954305-2-2s.8954305-2 2-2c10.4886126.0115735 18.9884265 8.5113874 19 19 0 1.1045695-.8954305 2-2 2z"/><path id="Shape" d="m57 31c-1.1045695 0-2-.8954305-2-2-.0154309-13.800722-11.199278-24.9845691-25-25-1.1045695 0-2-.8954305-2-2s.8954305-2 2-2c16.008947.01763587 28.9823641 12.991053 29 29 0 .530433-.2107137 1.0391408-.5857864 1.4142136-.3750728.3750727-.8837806.5857864-1.4142136.5857864z"/></g></g></svg>
+					<div>
+						<a href="tel:{{ link }}" title="Telefone: {{ phone }}">
+							<div class="contact-title relative flex">
+								Compre por telefone
+							</div>
+							<p>{{ phone }}</p>
+						</a>
+					</div>
+				</li>
+			{% endif %}
+
+			{% if settings.whatsapp01 or settings.whatsapp02  %}
+				{% element 'snippets/whatsapp' %}
+			{% endif %}
+
+			{% if email %}
+				<li class="contact-item contact-mail flex">
+					<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><g><g><path d="M257,210c-24.814,0-45,20.186-45,45c0,24.814,20.186,45,45,45c24.814,0,45-20.186,45-45C302,230.186,281.814,210,257,210z"/></g></g><g><g><path d="M255,0C114.39,0,0,114.39,0,255s114.39,257,255,257s257-116.39,257-257S395.61,0,255,0z M362,330c-20.273,0-38.152-10.161-49.017-25.596C299.23,319.971,279.354,330,257,330c-41.353,0-75-33.647-75-75c0-41.353,33.647-75,75-75c16.948,0,32.426,5.865,45,15.383V195c0-8.291,6.709-15,15-15c8.291,0,15,6.709,15,15c0,33.36,0,41.625,0,75c0,16.538,13.462,30,30,30c16.538,0,30-13.462,30-30c0-100.391-66.432-150-135-150c-74.443,0-135,60.557-135,135s60.557,135,135,135c30,0,58.374-9.609,82.061-27.803c15.822-12.078,33.94,11.765,18.281,23.789C328.353,408.237,293.665,420,257,420c-90.981,0-165-74.019-165-165S166.019,90,257,90c82.897,0,165,61.135,165,180C422,303.091,395.091,330,362,330z"/></g></g></svg>
+					<div>
+						<a href="mailto:{{ email }}" title="Email: {{ email }}">
+							<div class="contact-title contact-right relative flex">
+								Envie um e-mail
+							</div>
+							<p>{{ email }}</p>
+						</a>
+					</div>
+				</li>
+			{% endif %}
+
+			{% if settings.hour %}
+				<li class="store-opening-hours">
+					<span>Horário de atendimento</span>
+					<p>{{ settings.hour }}</p>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+
+    <div class="nav-mobile-wrapper">
+        <nav class="nav-mobile">     
+			<p class="nav-title">Navegue por categoria</p>       
+            <ul class="list first-level">
+
+                {% for category in categories %}
+                
+                    <li {% if category.children %} class="sub" {% endif %}>
+                        
+                        <a href="{{ category.link }}">{{ category.name }}</a>
+
+                        {% if category.children %}
+                        <ul class="second-level">
+                                
+                            <a href="{{ category.link }}">Ver {{ category.name }}</a>
+                            
+                            {% for level2 in category.children %}
+
+                                <li {% if level2.children %} class="sub" {% endif %}>
+                                    
+                                    <a href="{{ level2.link }}">{{ level2.name }}</a>
+                                
+                                    {% if level2.children %}
+                                    <ul class="third-level">
+                                        {% for level3 in level2.children %}
+                                        <li>
+                                            <a href="{{ level3.link }}">{{ level3.name }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}   
+
+                                </li>
+
+                            {% endfor %}    
+
+                        </ul>
+                        {% endif %}   
+
+                    </li>
+
+                {% endfor %}  
+                    
+            </ul> 
+        </nav>
+    </div>
+
+</div>

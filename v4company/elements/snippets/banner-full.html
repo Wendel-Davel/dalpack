@@ -1,0 +1,61 @@
+{% set valueCount = settings.value_count_full_banner %}
+{% set slideConfigs = {
+    'stopOnHover' : (settings.banner_home_stop_hover ? true : false),
+    'timer'       : 4000,
+    'isMobile'    : utils.is_mobile
+
+} %}
+
+<div class="banner-home banner-advanced" data-settings="{{ slideConfigs | json_encode() | escape }}">
+    {% set color_title = settings.full_color_titlen|default('#fff') %}
+    {% set color_button = settings.full_color_button|default('#fff') %}
+    {% set color_button_text = settings.full_color_button_textn|default('#333') %}
+    <div class="swiper-container">
+        <div class="swiper-wrapper"> 
+
+        {% for i in 1..valueCount %}        
+            {% set title = attribute(settings, 'full_title_'~i) %} 
+
+            {% set button = attribute(settings, 'full_text_button_'~i) %} 
+            {% set link = attribute(settings, 'full_link_'~i) %} 
+            {% set image_mobile = attribute(settings, 'full_image_mobile_'~i) %} 
+            {% set image_desktop = attribute(settings, 'full_image_desktop_'~i) %} 
+
+            {% set image = image_mobile or image_desktop %} 
+            {% if image_desktop %}
+            <div class="swiper-slide slide__item">
+                <a {% if link %} href="{{ link }}" {% endif %}>
+                    <div class="slide__item__image">
+
+                        {% if image_desktop and image_mobile %}
+                            <img class="full_desktop" src="{{ asset( image_desktop ) }}" alt="{{ title }}">
+                            <img class="full_mobile" src="{{ asset( image_mobile ) }}" alt="{{ title }}">
+                        {% else %}
+                            <img src="{{ asset( image_desktop ) }}" alt="{{ title }}" style="width: 100%">
+                        {% endif %}
+
+                    </div>
+                    <div class="slide__item__content">
+                        {% if title %}       
+                            <div class="slide__item__content__title" style="color: {{ color_title }};">
+                                {{ title }}
+                            </div>
+                        {% endif %}
+                        {% if link and button  %}
+                            <div class="slide__item__content__button">
+                                <a href="{{ link }}" class="btn btn--primary" style="background: {{ color_button }}; color: {{ color_button_text }}">{{ button }}</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="dots">
+            <div class="dot"></div>
+        </div>
+    </div>
+</div>

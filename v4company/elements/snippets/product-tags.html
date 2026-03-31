@@ -1,0 +1,110 @@
+{% if settings.show_product_seals_on_listing %}
+
+    {% set discount = product.price_offer > 0 ? (100 - (product.price_offer / product.price) * 100) : false %}
+    {% set tags_count = 0 %}
+
+    {% if product.new %}
+        {% set tags_count = tags_count + 1 %}
+    {% endif %}
+
+    {% if product.featured %}
+        {% set tags_count = tags_count + 1 %}
+    {% endif %}
+
+    {% if product.additional_button and settings.enable_extra_product_tag %}
+        {% set tags_count = tags_count + 1 %}
+    {% endif %}
+
+        <div class="product-tags-circle">
+            {% if product.ProgressiveDiscounts or discount or product.free_shipping %}
+                {% if discount %}
+                    <div class="tag-circle discount" style="display: none">
+                        <span class="discount-value">
+                            -{{ discount | number_format }}%
+                        </span>
+                    </div>
+                {% endif %}
+
+                {% if product.free_shipping  %}
+                    <div class="tag-circle free-shipping">
+                        <svg id="Layer_1" enable-background="new 0 0 35 35" height="512" viewBox="0 0 35 35" width="512" xmlns="http://www.w3.org/2000/svg"><g><path d="m1.9126 24.5c0 .5527.4473 1 1 1h1.9835c.0114 2.2072 1.8087 4 4.0184 4s4.0071-1.7928 4.0184-4h8.9631c.0114 2.2072 1.8087 4 4.0184 4s4.0071-1.7928 4.0184-4h2.1544c.5527 0 1-.4473 1-1v-8.752c0-.7305-.3145-1.4268-.8643-1.9102-2.3638-1.8583-3.0774-3.3378-5.0671-3.3378h-4.2412v-4c0-.5527-.4473-1-1-1h-19c-.5527 0-1 .4473-1 1v12c0 .0142.0074.026.0081.04-.001.0176-.01.0322-.01.0498v5.9102zm7.002 3c-1.1143 0-2.0205-.9063-2.0205-2.0205s.9063-2.0205 2.0205-2.0205 2.0205.9063 2.0205 2.0205-.9063 2.0205-2.0205 2.0205zm17 0c-1.1143 0-2.0205-.9063-2.0205-2.0205s.9063-2.0205 2.0205-2.0205 2.0205.9063 2.0205 2.0205-.9063 2.0205-2.0205 2.0205zm1.2412-15c.8769 0 1.0156.5665 3.7471 2.8398.1172.1035.1846.252.1846.4082v7.752h-1.6065c-.0283 0-.052.0137-.0798.0161-.6907-1.2213-1.9863-2.0571-3.4866-2.0571-1.4963 0-2.7891.8314-3.4813 2.0474-.0112-.0004-.0203-.0064-.0314-.0064h-9.9795c-.0095 0-.0175.0051-.027.0054-.6923-1.2153-1.9849-2.0464-3.4808-2.0464-1.4963 0-2.7891.8314-3.4813 2.0474-.0112-.0004-.0203-.0064-.0314-.0064h-1.4893v-4h18.002c.5527 0 1-.4473 1-1v-6zm-23.2412-5h17v3.9902c0 .0034-.002.0063-.002.0098s.002.0063.002.0098v5.9902h-17z"></path></g></svg>                
+                        <ul class="banner-progressive-discounts">
+                            <b>Frete grátis</b>
+                            <p>consulte sua região</p>
+                        </ul>
+                    </div>
+                {% endif %}
+
+                {% if product.ProgressiveDiscounts %}
+                    {% for discount in product.ProgressiveDiscounts %}
+                        <div class="tag-circle progressive-discount" title="Produto com desconto progressivo">
+                            {% if discount.tag %}
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.25 9L9.75 15M15 14.25C15 14.6642 14.6642 15 14.25 15C13.8358 15 13.5 14.6642 13.5 14.25C13.5 13.8358 13.8358 13.5 14.25 13.5C14.6642 13.5 15 13.8358 15 14.25ZM10.5 9.75C10.5 10.1642 10.1642 10.5 9.75 10.5C9.33579 10.5 9 10.1642 9 9.75C9 9.33579 9.33579 9 9.75 9C10.1642 9 10.5 9.33579 10.5 9.75ZM21.75 12C21.75 13.2 20.1 14.1 19.65 15.15C19.2 16.275 19.725 18.075 18.9 18.9C18.075 19.725 16.275 19.2 15.15 19.65C14.1 20.1 13.2 21.75 12 21.75C10.8 21.75 9.9 20.1 8.85 19.65C7.725 19.2 5.925 19.725 5.1 18.9C4.275 18.075 4.8 16.275 4.35 15.15C3.9 14.1 2.25 13.2 2.25 12C2.25 10.8 3.9 9.9 4.35 8.85C4.8 7.725 4.275 5.925 5.1 5.1C5.925 4.275 7.725 4.8 8.85 4.35C9.9 3.9 10.8 2.25 12 2.25C13.2 2.25 14.1 3.9 15.15 4.35C16.275 4.8 18.075 4.275 18.9 5.1C19.725 5.925 19.2 7.725 19.65 8.85C20.1 9.9 21.75 10.8 21.75 12Z" stroke="#3A52EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                {% if discount.description %}
+                                <ul class="banner-progressive-discounts">
+                                    <b>{{discount.tag}}</b>
+                                    <p>{{discount.description}}</p>
+                                </ul>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+
+        </div>
+            {% if product.new or product.featured or product.free_shipping or product.additional_button or discount %}
+                <div class="product-tags {% if product.free_shipping -%} has-free-shipping-tag {%- endif %}" data-tags-count="{{ tags_count > 4 ? 4 : tags_count }}">
+                        {% set replaceTags = {'src=': 'width="119" height="22" alt="Selo" src='} %}
+                        {% if product.new %}
+                            <div class="tag new">
+                                {% if Image('new') %}
+                                    {{ Image('new') | replace(replaceTags) }}
+                                {% else %}
+                                    <p>Novidade</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {% if product.featured %}
+                            <div class="tag featured">
+                                {% if Image('featured') %}
+                                    {{ Image('featured') | replace(replaceTags) }}
+                                {% else %}
+                                    <p>Destaque</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+
+                        {% if product.free_shipping %}
+                            <div class="tag featured">
+                                {% if Image('free_shipping') %}
+                                    {{ Image('free_shipping') | replace(replaceTags) }}
+                                {% else %}
+                                     <p>Frete Grátis</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {# {% if tags_count < 5 and discount %}
+                            <div class="tag discount">
+                                <span class="tag-text">
+                                    {{ discount | number_format }}% Desc
+                                </span>
+                            </div>
+                        {% endif %} #}
+
+                        {% if product.additional_button and Image('additional_button') %}
+                            <div class="tag extra">
+                                {{ Image('additional_button') | replace(replaceTags) }}
+                            </div>
+                        {% endif %}
+
+                </div>
+            {% endif %}
+
+
+{% endif %}

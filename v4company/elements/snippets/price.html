@@ -1,0 +1,64 @@
+<div class="product-price">
+    <meta itemprop="productID" content="{{ product.id }}"/>
+    <meta itemprop="sku" content="{{ product.id }}"/>
+    {% if product.ean %}
+        <meta itemprop="gtin14" content="{{ product.ean }}">
+    {% endif %}
+    
+    {% if product.description_small %}
+        <meta itemprop="description" content="{{ product.description_small }}">
+    {% endif %}
+    
+
+    {% if product.brand %}
+    <span itemprop="brand" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="{{ product.brand }}"/>
+    </span>
+    {% endif %} 
+    {% if product.available %}
+        
+        {% if product.stock > 0 or settings.without_stock_sale %} 
+        
+            {% if product.upon_request %}
+                <p>Produto Sob Consulta</p>
+            {% else %}
+            
+                {% if product.has_other_prices %}
+                    <span>a partir de </span> 
+                {% endif %} 
+                
+                {% if settings.price_before_style == 'strike' or settings.price_before_style == 'strike-depor' %}
+                    {% set priceStyle = 'strike' %}
+
+                {% endif %}
+                
+                {% if settings.price_before_style == 'depor' or settings.price_before_style == 'strike-depor' %}
+                    {% set priceOld = 'De: ' %}
+                {% endif %}
+
+
+                    
+                {% if product.price_offer > 0 and product.show_price %}
+                    <div class="price-before {{ priceStyle }}">
+                        <div>
+                            {{ priceOld }} <abbr class="currency" title="BRL">{{ settings.currency }}</abbr> {{ product.price|currency }}
+                        </div>
+                    </div>
+                    <div class="price-promotion">
+                        <div>{{ priceOld ? 'Por: ' }} R$ {{ product.price_offer|currency  }}</div>
+                    </div>
+                {% else %}
+                    <span>R$ {{ product.price|currency }}</span>
+                {% endif %}
+            {% endif %}
+            
+        {% else %} 
+            <p>Esgotado!</p>
+        {% endif %} 
+        
+    {% else %} 
+        <p>Indisponível</p> 
+        
+    {% endif %} 
+    
+</div>

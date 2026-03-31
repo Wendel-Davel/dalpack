@@ -1,0 +1,275 @@
+{% set email = Translation('ag_email_1') %} {% set whatsappNumber =
+Translation('ag_telefone_3') %} {% set phone = Translation('ag_telefone_1') %}
+{% set phone2 = Translation('ag_telefone_2') %}
+
+<div style="display: none">
+  {% if settings.agency_logo %}
+  <div class="agency">
+    <a
+      class="logo-copyright"
+      href="{{ settings.agency_logo_link }}"
+      target="_blank"
+      title="Agência - Personaliza��o para E-commerce"
+    >
+      Personalizado por
+      <img
+        src="{{ asset( settings.agency_logo ) }}"
+        alt="Agência - Personalização para E-commerce"
+        width="222"
+        height="36"
+      />
+    </a>
+  </div>
+  {% endif %}
+  <div class="plugoo">
+    <a
+      class="logo-copyright"
+      href="https://www.plugoo.com.br"
+      rel="noopener"
+      target="_blank"
+      title="Plugoo - Tecnologia  para E-commerce"
+    >
+      Desenvolvido por &nbsp<b>Plugoo</b>
+    </a>
+  </div>
+  <div class="tray">
+    {% element 'snippets/credits' %} {% if
+    tray.theme_configs.custom_theme_preview %}
+    <div class="mode-preview" style="display: none">
+      <a href="/mvc/store/home/reset_opencode_preview?loja={{ store.id }}"
+        >Sair modo preview</a
+      >
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<footer
+  class="new-footer {% if 'home' not in pages.current %} with-border {% endif %}"
+>
+  <div class="container">
+    <div class="topo">
+      <div class="logo">
+        {% if settings.logo_footer %}
+        <a
+          class="logo"
+          href="{{ store.url }}"
+          title="{{ store.name }}"
+          aria-label="{{ store.name }}"
+        >
+          <img
+            src="{{ asset(settings.logo_footer) }}"
+            alt="{{ store.name }}"
+            width="222"
+            height="36"
+          />
+        </a>
+        {% endif %}
+      </div>
+      <div class="social">
+        <span>Redes sociais</span>
+        <div class="social-media">{% element 'snippets/social-media' %}</div>
+      </div>
+    </div>
+    <div class="meio">
+      <div class="box">
+        <div class="title">Categorias</div>
+        <div class="overflow">
+          <ul class="list">
+            {% for category in categories %}
+            <li>
+              <a href="{{ category.link }}" title="{{ category.name }}"
+                >{{ category.name }}</a
+              >
+            </li>
+            {% endfor %}
+            <li>
+              <a href="{{ links.contact }}" title="Fale Conosco"
+                >Fale Conosco</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="box">
+        <div class="title">Institucional {{ icon }}</div>
+        <div class="overflow">
+          <ul class="list">
+            {% for custom in pages.custom %}
+            <li>
+              <a href="{{ custom.url }}" title="{{ custom.name }}"
+                >{{ custom.name }}</a
+              >
+            </li>
+            {% endfor %}
+            <li>
+              <a href="{{ links.contact }}" title="Fale Conosco"
+                >Fale Conosco</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="box box-infos">
+        <div class="title">Contato</div>
+        <div class="overflow">
+          <ul>
+            {% if phone %} {% set link = phone | replace({'(': '', ')': '', '-':
+            '', ' ': ''}) %}
+            <li class="box-contact flex">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_2298_868)">
+                  <path
+                    d="M12.7875 9.83492V11.5787C12.7882 11.7406 12.755 11.9008 12.6902 12.0491C12.6253 12.1974 12.5302 12.3306 12.4109 12.44C12.2916 12.5494 12.1508 12.6328 11.9975 12.6846C11.8441 12.7365 11.6816 12.7557 11.5204 12.7412C9.7318 12.5468 8.01371 11.9356 6.5042 10.9567C5.0998 10.0643 3.90911 8.87363 3.0167 7.46923C2.03437 5.95286 1.42305 4.22643 1.23226 2.42978C1.21773 2.26905 1.23683 2.10705 1.28835 1.9541C1.33986 1.80115 1.42266 1.66061 1.53147 1.54141C1.64027 1.42221 1.77271 1.32698 1.92034 1.26177C2.06797 1.19656 2.22756 1.16281 2.38895 1.16265H4.1327C4.41479 1.15988 4.68826 1.25977 4.90214 1.44371C5.11602 1.62765 5.25572 1.88308 5.2952 2.16241C5.3688 2.72045 5.5053 3.26837 5.70208 3.79572C5.78028 4.00377 5.79721 4.22987 5.75085 4.44723C5.70449 4.6646 5.59679 4.86413 5.44052 5.02216L4.70233 5.76035C5.52977 7.21554 6.73464 8.42041 8.18983 9.24786L8.92802 8.50967C9.08606 8.35339 9.28558 8.24569 9.50295 8.19933C9.72032 8.15298 9.94642 8.1699 10.1545 8.24811C10.6818 8.44489 11.2297 8.58138 11.7878 8.65498C12.0701 8.69481 12.328 8.83703 12.5123 9.05459C12.6967 9.27214 12.7946 9.54986 12.7875 9.83492Z"
+                    stroke="#5FBB51"
+                    stroke-width="1.1625"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_2298_868">
+                    <rect width="13.95" height="13.95" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              <div>
+                <a href="tel:{{ link }}" title="Telefone: {{ phone }}">
+                  <p>{{ phone }}</p>
+                </a>
+              </div>
+            </li>
+            {% endif %} {% if settings.whatsapp01 or settings.whatsapp02 %} {%
+            element 'snippets/whatsapp' %} {% endif %} {% if email %}
+            <li class="contact-item contact-mail flex">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="10"
+                viewBox="0 0 12 10"
+                fill="none"
+              >
+                <path
+                  d="M11.2546 1.60801C11.2546 1.01848 10.7723 0.536133 10.1827 0.536133H1.60776C1.01823 0.536133 0.535889 1.01848 0.535889 1.60801M11.2546 1.60801V8.03924C11.2546 8.62877 10.7723 9.11111 10.1827 9.11111H1.60776C1.01823 9.11111 0.535889 8.62877 0.535889 8.03924V1.60801M11.2546 1.60801L5.89525 5.35956L0.535889 1.60801"
+                  stroke="#5FBB51"
+                  stroke-width="1.07187"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <a href="mailto:{{ email }}" title="Email: {{ email }}">
+                  <p>{{ email }}</p>
+                </a>
+              </div>
+            </li>
+            {% endif %} {% if settings.hour %}
+            <li class="store-opening-hours">
+              <p>{{ settings.hour }}</p>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="final">
+      <div class="box">
+        {% if paymentMethods.order or paymentMethods.credit %}
+        <div class="title">Formas de pagamento {{ icon }}</div>
+        <div class="overflow">{% element 'snippets/payment-list' %}</div>
+        {% endif %}
+      </div>
+      <div class="feito-por">
+        <span>Desenvolvido por:</span>
+        <a href="http://">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="56"
+            height="18"
+            viewBox="0 0 56 18"
+            fill="none"
+          >
+            <g clip-path="url(#clip0_2298_899)">
+              <mask
+                id="mask0_2298_899"
+                style="mask-type: luminance"
+                maskUnits="userSpaceOnUse"
+                x="0"
+                y="0"
+                width="56"
+                height="18"
+              >
+                <path d="M55.4998 0H0V17.5263H55.4998V0Z" fill="white" />
+              </mask>
+              <g mask="url(#mask0_2298_899)">
+                <path
+                  d="M14.2976 12.5593V15.0648H11.855C11.6934 15.0648 11.5623 14.9343 11.5623 14.7722V12.86C11.5623 12.6565 11.3971 12.4917 11.1942 12.4917H3.97354C3.7697 12.4917 3.60537 12.327 3.60537 12.1235V9.91239C3.60537 9.81518 3.64399 9.72153 3.71313 9.65218L11.4779 1.90145C11.5686 1.81142 11.6917 1.7601 11.8191 1.7601H13.951C14.2177 1.7601 14.434 1.97617 14.434 2.24177V9.69273H16.8191V2.21656C16.8191 0.993039 15.825 0 14.5992 0H3.73559V6.05456L7.79267 2.00319C8.02074 1.77541 8.32962 1.64756 8.65292 1.64756H10.5341L3.23272 8.93734L2.00159 7.70752C1.95041 7.65623 1.92167 7.58776 1.92167 7.51578V0.0198067C0.836917 0.165656 0 1.09297 0 2.21656V14.9145C0 16.138 0.994058 17.131 2.2198 17.131H14.5984C15.8242 17.131 16.8182 16.1388 16.8182 14.9145V12.5602L14.2976 12.5593Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M7.58398 9.58118H11.6752V5.5415C11.6851 5.5415 7.58398 9.58118 7.58398 9.58118Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M19.4754 0.0727539H19.2922V17.0552H19.4754V0.0727539Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M24.3458 11.6142C22.6882 11.6142 21.6572 10.5294 21.6572 8.7324C21.6572 6.93536 22.6971 5.84961 24.3287 5.84961C25.4701 5.84961 26.3241 6.32405 26.6374 7.29909L25.5805 7.74835C25.3946 7.07038 25.0229 6.80748 24.3799 6.80748C23.4496 6.80748 22.8668 7.48546 22.8668 8.7324C22.8668 9.97933 23.4164 10.6572 24.3548 10.6572C25.0229 10.6572 25.462 10.3349 25.6398 9.66509L26.7137 9.9874C26.3752 11.0812 25.479 11.6142 24.3458 11.6142Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M31.7031 9.40999C31.7031 10.7921 30.8995 11.6139 29.5381 11.6139C28.1769 11.6139 27.373 10.7921 27.373 9.40999C27.373 8.02804 28.1769 7.20605 29.5381 7.20605C30.8995 7.20605 31.7031 8.02804 31.7031 9.40999ZM28.5324 9.40999C28.5324 10.3085 28.888 10.7497 29.539 10.7497C30.1901 10.7497 30.5457 10.3085 30.5457 9.40999C30.5457 8.51153 30.191 8.07034 29.539 8.07034C28.8871 8.07034 28.5324 8.51153 28.5324 9.40999Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M33.842 10.181C33.842 10.5798 33.9436 10.7238 34.256 10.7238C34.4508 10.7238 34.5684 10.6987 34.7553 10.6303L34.6538 11.436C34.4679 11.5458 34.1465 11.6143 33.8672 11.6143C33.0473 11.6143 32.6836 11.2326 32.6836 10.3511V5.43457H33.842V10.181Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M36.5393 10.181C36.5393 10.5798 36.6408 10.7238 36.9533 10.7238C37.1481 10.7238 37.2658 10.6987 37.4526 10.6303L37.3511 11.436C37.1653 11.5458 36.8437 11.6143 36.5645 11.6143C35.7446 11.6143 35.3809 11.2326 35.3809 10.3511V5.43457H36.5393V10.181Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M37.96 6.06207C37.96 5.64704 38.197 5.43457 38.6784 5.43457C39.1596 5.43457 39.3967 5.64614 39.3967 6.06207C39.3967 6.47803 39.1596 6.68057 38.6784 6.68057C38.197 6.68057 37.96 6.47709 37.96 6.06207ZM39.254 11.5297H38.0956V7.29102H39.254V11.5297Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M44.9866 11.292L44.8851 11.6143C44.4793 11.6143 44.1748 11.4703 43.6423 10.894C43.2445 11.3352 42.6869 11.6143 41.9594 11.6143C40.9789 11.6143 40.2686 11.0633 40.2686 10.2493C40.2686 9.47782 40.7338 8.99439 41.6802 8.47759C41.1649 7.79968 40.987 7.48549 40.987 7.05329C40.987 6.40867 41.4432 5.8667 42.2388 5.8667C42.9069 5.8667 43.4564 6.21425 43.4564 6.94346C43.4564 7.54578 43.2365 7.99504 42.2307 8.57124C42.3914 8.78279 42.5774 9.0295 42.8054 9.31757C43.135 9.74165 43.4062 10.0801 43.6253 10.343C43.9378 9.8596 44.0903 9.20686 44.0652 8.47759L44.4119 8.51183C44.437 9.24916 44.2592 10.0207 43.8623 10.614C44.3617 11.165 44.6148 11.292 44.9866 11.292ZM43.4053 10.6311C43.1682 10.3511 42.8809 10.0036 42.5261 9.55435C42.281 9.24916 42.0781 8.98627 41.9003 8.75761C41.0292 9.25816 40.6655 9.62189 40.6655 10.2242C40.6655 10.8598 41.2402 11.2667 41.9335 11.2667C42.5504 11.2667 43.0506 11.038 43.4053 10.6311ZM41.3848 7.04523C41.3848 7.39272 41.4782 7.58808 42.0107 8.29123C42.9158 7.79968 43.0757 7.40983 43.0757 6.95158C43.0757 6.49332 42.7542 6.23131 42.2298 6.23131C41.7053 6.23131 41.3848 6.57885 41.3848 7.04523Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M48.0733 11.6142C46.4156 11.6142 45.3848 10.5294 45.3848 8.7324C45.3848 6.93536 46.4247 5.84961 48.0571 5.84961C49.1985 5.84961 50.0524 6.32405 50.3658 7.29909L49.3089 7.74835C49.123 7.07038 48.7513 6.80748 48.1084 6.80748C47.178 6.80748 46.5952 7.48546 46.5952 8.7324C46.5952 9.97933 47.1448 10.6572 48.0832 10.6572C48.7513 10.6572 49.1904 10.3349 49.3682 9.66509L50.4422 9.9874C50.1036 11.0812 49.2074 11.6152 48.0742 11.6152L48.0733 11.6142Z"
+                  fill="#F3F4F6"
+                />
+                <path
+                  d="M55.4294 9.40999C55.4294 10.7921 54.6257 11.6139 53.2643 11.6139C51.9031 11.6139 51.0994 10.7921 51.0994 9.40999C51.0994 8.02804 51.9031 7.20605 53.2643 7.20605C54.6257 7.20605 55.4294 8.02804 55.4294 9.40999ZM52.2587 9.40999C52.2587 10.3085 52.6142 10.7497 53.2652 10.7497C53.9163 10.7497 54.2719 10.3085 54.2719 9.40999C54.2719 8.51153 53.9163 8.07034 53.2652 8.07034C52.6142 8.07034 52.2587 8.51153 52.2587 9.40999Z"
+                  fill="#F3F4F6"
+                />
+              </g>
+            </g>
+            <defs>
+              <clipPath id="clip0_2298_899">
+                <rect width="55.5" height="17.5263" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="cnpj-cont">
+  <div class="container">
+    <div class="text">
+      {{ store.name }}.{{settings.maps_location_store}}. CNPJ {{
+      Translation('ag_mensagem_rodape')| split('CNPJ')|last|trim }}
+    </div>
+  </div>
+</div>

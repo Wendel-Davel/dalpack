@@ -1,0 +1,30 @@
+
+{% set lazy_class = swiper ? 'swiper-lazy' : 'lazyload' %}
+{% set valueCount = settings.value_count_brands %}
+
+{% if settings.brands and not settings.use_performance_mode %}
+
+    <div id="banner-brands" style="order: {{ settings.position_brands }}">
+        <div class="container swiper-container">
+            <div class="section-header">
+                <h2 class="title-section flex">
+                    {{ settings.brand_title}}
+                </h2>
+            </div>
+            <div class="brands-slide swiper-wrapper flex justify-between">
+                {% for i in 1..valueCount %}
+                    {% if attribute(settings, 'brand_' ~ i) %}
+                        <div class="item swiper-slide">
+
+                            <a href="{{ attribute(settings, 'brand_link_' ~ i) }}" rel="noopener noreferrer">
+                                <img {% if notLazy %}class="{{ lazy_class }}" src="{{ asset('img/empty.png') }}" data-{% endif %}src="{{ asset( attribute(settings, 'brand_' ~ i) ) }}" alt="Banner">
+                            </a>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="dots"></div>
+        </div>
+    </div>
+{% endif %}

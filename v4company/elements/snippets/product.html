@@ -1,0 +1,229 @@
+{% set hover_class = product.available and (product.stock > 0 or
+settings.without_stock_sale) and not product.upon_request ? 'show-down' : '' %}
+<div class="product {{ hover_class }}" {{ product.data_tray_ga4 }}>
+  {% if pages.current == 'catalog' and settings.compare %}
+  <div class="compare-buttons">
+    <a
+      href="{{ links.compare_delete ~ product.id }}"
+      class="flex justify-center align-center {{ not product.compare ? 'compare-hidden' }}"
+      data-compare="remove"
+    >
+      <span class="filter-checkbox checked"></span>
+      {{ Translation("remover_comparar") }}
+    </a>
+
+    <a
+      href="{{ links.compare_add ~ product.id }}"
+      class="flex justify-center align-center {{ product.compare ? 'compare-hidden' }}"
+      data-compare="add"
+    >
+      <span class="filter-checkbox"></span>
+      {{ Translation("comparar_produto") }}
+    </a>
+  </div>
+  {% endif %}
+
+  <div class="image">
+    {% set discount = product.price_offer > 0 ? (100 - (product.price_offer /
+    product.price) * 100) : false %} {% set image_class = slide and
+    pages.current == 'home' ? 'swiper-lazy' : 'lazyload' %} {% if discount %}
+    <div class="tag-list tag-discount">
+      <span class="discount-value">
+        - {{ discount | number_format }}% OFF
+      </span>
+    </div>
+    {% endif %}
+
+    <a
+      href="{{ product.link }}"
+      class="space-image {{ settings.showcase_product_format }}"
+    >
+      {% if slide and pages.current == 'home' %}
+      <div class="swiper-lazy-preloader" style="opacity: 0.4"></div>
+      {% endif %} {% if not utils.is_mobile %} {% set firstImage =
+      settings.showcase_product_image and not settings.use_performance_mode ?
+      product.images[0].full : product.images[0].large %} {% else %} {% set
+      firstImage = settings.showcase_product_image and not
+      settings.use_performance_mode ? product.images[0].large :
+      product.images[0].medium %} {% endif %}
+      <img
+        class="{{ image_class }} {{ settings.show_image_hover and product.images[1] and not utils.is_mobile  ? 'primary-image' : 'no-hover' }}"
+        src="{{ asset('img/empty.png') }}"
+        data-src="{{firstImage}}"
+        alt="{{ product.name }}"
+      />
+
+      {% if settings.show_image_hover and not utils.is_mobile%} {% set
+      secondImage = settings.showcase_product_image and not
+      settings.use_performance_mode ? product.images[1].full :
+      product.images[1].large %}
+      <img
+        class="{{ image_class }} hover-image"
+        src="{{ asset('img/empty.png') }}"
+        data-src="{{secondImage}}"
+        alt="{{ product.name }}"
+      />
+      {% endif %}
+    </a>
+
+    {% element 'snippets/product-tags' { 'product': product } %}
+  </div>
+
+  <a class="product-info" href="{{ product.link }}">
+    <div class="product-name">{{ product.name }}</div>
+
+    {% if settings.show_product_review %} {% element 'snippets/rating' {
+    'review': product.ranking, 'total' : false } %} {% endif %}
+
+    <div class="product-price">
+      {% if product.available and (product.stock > 0 or
+      settings.without_stock_sale) and not product.upon_request %} {% element
+      'snippets/product-price' { 'product': product } %} {% elseif
+      product.upon_request %} {% element 'snippets/product-message' {
+      'product_message': 'Sob consulta', 'know_more' : 'Saiba mais' } %} {%
+      elseif product.stock <= 0 %} {% element 'snippets/product-message' {
+      'product_message': 'Esse acabou :(', 'know_more' : 'Avise-me quando
+      chegar' } %} {% else %} {% element 'snippets/product-message' {
+      'product_message': 'Esse acabou :(', 'know_more' : 'Avise-me quando
+      chegar' } %} {% endif %}
+    </div>
+    {% if settings.show_product_list_promotion and not
+    settings.use_performance_mode%} {% if product.available and product.stock >
+    0 and product.price_offer and product.end_promotion != '0000-00-00' %}
+    <div class="plugoo-countdown">
+      <div>
+        <div class="pg-icon">
+          <svg
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"
+            />
+            <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z" />
+          </svg>
+        </div>
+        <div class="pg-timer">
+          <div class="pg-timer-title">Oferta termina em:</div>
+          <div
+            class="pg-timer-content"
+            data-start="{{ product.start_promotion  }}"
+            data-end="{{ product.end_promotion }}"
+          >
+            <div id="pg-timer-added"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %} {% endif %}
+  </a>
+
+  <div
+    class="actions {{ settings.fixed_actions ? 'actions-fixed' }}"
+    data-product="{{ product.id }}"
+  >
+    {% if product.available and (product.stock > 0 or
+    settings.without_stock_sale) and not product.upon_request %} {% if
+    settings.fastBuy == 3 or settings.fastBuy == 2 %} {% set fastBuy =
+    product.variants ? 3 : 2 %} {% else %} {% set fastBuy = 1 %} {% endif %} {%
+    if fastBuy == 1 %}
+    <a class="product-button" href="{{ product.link }}"> Ver produto </a>
+    {% element 'snippets/wp-order-btn-list' { 'product': product } %} {% elseif
+    fastBuy == 2 and product.has_variation == 0 and product.is_kit == 0 %}
+    <div class="flex">
+      <div data-app="product.quantity" class="qtd-prod flex">
+        <button
+          type="button"
+          data-app="product.qty"
+          data-action="minus"
+          data-product="{{ product.id }}"
+          aria-label="Diminuir quantidade"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+        <input
+          type="number"
+          class="form-control"
+          min="1"
+          max="99"
+          step="1"
+          name="qty"
+          id="quant qtd-prod-id-{{ product.id }}"
+          value="1"
+          size="3"
+          aria-label="Quantidade"
+        />
+        <button
+          type="button"
+          data-app="product.qty"
+          data-action="plus"
+          data-product="{{ product.id }}"
+          aria-label="Aumentar quantidade"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <form
+        type="submit"
+        class="add-to-cart botao"
+        data-app="product.buy-button"
+        data-product="{{ product.id }}"
+      >
+        <div class="icone">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="21"
+            height="21"
+            viewBox="0 0 21 21"
+            fill="none"
+          >
+            <g clip-path="url(#clip0_2339_2005)">
+              <path
+                d="M0.875 0.875H4.375L6.72 12.5913C6.80001 12.9941 7.01917 13.356 7.3391 13.6135C7.65904 13.8711 8.05936 14.0079 8.47 14H16.975C17.3856 14.0079 17.786 13.8711 18.1059 13.6135C18.4258 13.356 18.645 12.9941 18.725 12.5913L20.125 5.25H5.25M8.75 18.375C8.75 18.8583 8.35825 19.25 7.875 19.25C7.39175 19.25 7 18.8583 7 18.375C7 17.8918 7.39175 17.5 7.875 17.5C8.35825 17.5 8.75 17.8918 8.75 18.375ZM18.375 18.375C18.375 18.8583 17.9833 19.25 17.5 19.25C17.0168 19.25 16.625 18.8583 16.625 18.375C16.625 17.8918 17.0168 17.5 17.5 17.5C17.9833 17.5 18.375 17.8918 18.375 18.375Z"
+                stroke="white"
+                stroke-width="1.65"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_2339_2005">
+                <rect width="21" height="21" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+        Comprar
+      </form>
+    </div>
+    {% element 'snippets/wp-order-btn-list' %} {% elseif fastBuy == 3 %} {%
+    element 'snippets/product-add-variant' { 'product': product } %} {% element
+    'snippets/wp-order-btn-list' { 'product': product } %} {% endif %} {% endif
+    %}
+  </div>
+</div>

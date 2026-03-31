@@ -1,0 +1,151 @@
+{% set more_quantity = settings.number_cat_menu|default(4) %}
+
+{% if categories | length > more_quantity %}
+    {% set show_categories = categories | slice(0, more_quantity) %}
+    {% set more_categories = categories | slice(more_quantity) %}
+{% else %}
+    {% set show_categories = categories %}
+    {% set more_categories = null %}
+{% endif %}
+
+<nav class="nav">
+    <div class="container">
+        <ul class="list flex {% if categories | length > 4 %} justify-between {% else %} justify-center {% endif %}">
+
+
+            {% for category in show_categories %}
+                <li class="first-level {%- if category.children %} sub {%- endif %}" data-cat-id="{{ category.id }}">
+                    
+                    <a href="{{ category.link }}" title="{{ category.name }}">
+                        {% if category.images %}
+                            <figure class="category-image">
+                                <img src="{{ category.images[0] }}" alt="{{ category.name }}">
+                            </figure>
+                        {% endif %}
+                        <div class="name">
+                            {{ category.name }}              
+                        </div>
+                    </a>
+                    
+                    {% if category.children %}
+                    <ul class="sub-list second-level {% if settings.show_product_menu %} menu-product {% endif %}">
+                        <div class="menu-scroll">
+                            <a class="title-category" href="{{ category.link }}" title="{{ category.name }}">{{ category.name }}</a>
+                            <br>
+                            {% for level2 in category.children %}
+
+                                <li {% if level2.children %} class="sub" {% endif %}>
+                                    
+                                    <a href="{{ level2.link }}" title="{{ level2.name }}">{{ level2.name }}</a>
+                                
+                                    {% if level2.children %}
+                                    <ul class="sub-list third-level">
+                                        {% for level3 in level2.children %}
+                                        <li>
+                                            <a href="{{ level3.link }}" title="{{ level3.name }}">{{ level3.name }}</a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %} 
+
+                                </li>
+
+                            {% endfor %} 
+                        </div>
+                        {% if settings.show_product_menu  and not settings.use_performance_mode %}    
+                            {% set productCategory = Products({ 
+                                'filter': ['available'], 
+                                'limit': 2, 
+                                'order': {'quantity_sold': 'desc'}, 
+                                categories: category.id 
+                                }) 
+                            %}
+
+                            {% if productCategory %}
+                                <div class="product-menu">
+                                    {% element 'snippets/product-menu' {
+                                        "products": productCategory
+                                    } 
+                                    %}
+                                </div>                       
+                            {% endif %}
+                        {% endif %}
+
+                    </ul>
+                    {% endif %} 
+                
+                </li>
+            {% endfor %}
+            
+            {% if more_categories %}
+                <li class="first-level sub other-menu">
+
+                    <span role="button" title="Departamentos">
+                        <div class="name all-menu">
+                            {% set titleCategory = settings.title_all_category  %}
+                            {{ titleCategory|default('+ categorias') }}
+                        </div>
+                    </span>
+
+                    <ul class="sub-list second-level">                    
+                        {% for category in more_categories %}                            
+                            <li>                                
+                                <a href="{{ category.link }}" title="{{ category.name }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %} 
+                    </ul> 
+                                       
+                </li>
+            {% endif %}
+
+            {% if settings.show_menu_sale and not settings.use_performance_mode %} 
+                <li class="first-level sub menu-sale" data-style="{{ settings.menu_rounded_style }}">
+                
+                    {% set linkCategory = settings.menu_sale_category_link  %}
+                    {% set titleCatSale = settings.title_menu_sale  %}
+
+                    <a title="{{ titleCatSale|default('Melhores ofertas') }}" {% if linkCategory is not null %} href="{{ linkCategory }}" {% endif %}>
+                        <svg enable-background="new 0 0 512.018 512.018" height="34" viewBox="0 0 512.018 512.018" width="34" xmlns="http://www.w3.org/2000/svg"><g><path d="m360.282 96.753c-46.547-55.655-92.479-91.823-94.412-93.335-10.473-8.193-25.861-.736-25.861 12.6v70.358c0 36.335-48.075 49.125-66.104 17.54-5.568-9.754-19.184-10.858-26.271-2.209-48.434 59.1-91.625 133.598-91.625 210.311 0 110.28 89.72 200 200 200s200-89.72 200-200c0-78.711-45.479-155.187-95.727-215.265zm-104.273 383.265c-92.636 0-168-75.364-168-168 0-64.54 36.903-128.379 72.284-174.746 41.915 37.016 111.716 8.571 111.716-50.896v-35.438c70.952 64.823 152 165.149 152 261.08 0 92.636-75.364 168-168 168z"/><path d="m321.832 227.388c-6.974-5.424-17.026-4.168-22.453 2.807l-112 144c-8.228 10.58-.519 25.824 12.619 25.824 4.768 0 9.486-2.123 12.641-6.178l112-144c5.425-6.975 4.168-17.028-2.807-22.453z"/><circle cx="312.009" cy="368.018" r="32"/><circle cx="200.009" cy="256.018" r="32"/></g></svg>                        
+                        <div class="name">
+                            {{ titleCatSale|default('Melhores ofertas') }}
+                        </div>
+                    </a>
+                    
+                    <ul class="sub-list second-level">
+                        {% set numberProdsOffer = settings.number_prods_offer  %}
+                        {% set categoryProdsOffer = settings.category_prods_offer  %}
+                        
+                        {% if categoryProdsOffer == null  %}
+                            {% set productOfferMenu = Products({ 
+                                'filter': ['promotion'], 
+                                'limit': numberProdsOffer, 
+                                'order': {'quantity_sold': 'desc'}, 
+                                })
+                            %}
+                        {% else %}
+                            {% set productOfferMenu = Products({ 
+                                'filter': ['promotion'], 
+                                'limit': numberProdsOffer, 
+                                'order': {'quantity_sold': 'desc'}, 
+                                'categories': categoryProdsOffer
+                                })
+                            %}
+                        {% endif %}
+
+                        {% if productOfferMenu %}
+                            <div class="product-menu-sale">
+                                {% element 'snippets/product-menu-sale' {
+                                    "products": productOfferMenu
+                                } 
+                                %}
+                            </div>                       
+                        {% endif %}
+
+                    </ul>
+                
+                </li>
+            {% endif %}
+
+        </ul>
+    </div>
+</nav>
