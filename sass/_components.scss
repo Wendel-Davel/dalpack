@@ -556,3 +556,21 @@
     line-height: 150%; /* 24px */
   }
 }
+#listagem-produtos .product .space-image img {
+  object-fit: contain !important;
+}
+
+.second-level a {
+  font-weight: 600;
+}
+
+.header .options-wrapper .dropHelp i svg {
+  fill: var(--color_header_highlight) !important;
+}
+
+.menu-mobile .text-2xl {
+  color: #fff;
+  p {
+    color: #fff;
+  }
+}

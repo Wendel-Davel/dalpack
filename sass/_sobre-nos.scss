@@ -45,6 +45,7 @@
     }
   }
   @media (max-width: 990px) {
+    padding: 5rem;
     .container {
       h1 {
         font-size: 54px;
@@ -52,14 +53,16 @@
     }
   }
   @media (max-width: 590px) {
+    padding: 2rem;
+
     .container {
       span {
         font-size: 18px;
-        text-align: center;
+        text-align: left;
       }
       h1 {
         font-size: 38px;
-        text-align: center;
+        text-align: left;
       }
     }
   }
