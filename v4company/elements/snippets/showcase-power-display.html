@@ -17,6 +17,15 @@
             'categories' : category
         }) %}
 
+    {% elseif type == 'recent' %}
+
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'id': 'desc' },
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
     {% elseif type == 'category'%}
         {% set products = Products({
             'filter': ['available'],
@@ -80,6 +89,15 @@
         {% set products = Products({
             'filter': ['available'],
             'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% elseif type == 'recent' %}
+
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'id': 'desc' },
             'limit' : quantity,
             'categories' : category
         }) %}
@@ -148,6 +166,15 @@
         {% set products = Products({
             'filter': ['available'],
             'order' : { 'quantity_sold': 'desc' },
+            'limit' : quantity,
+            'categories' : category
+        }) %}
+
+    {% elseif type == 'recent' %}
+
+        {% set products = Products({
+            'filter': ['available'],
+            'order' : { 'id': 'desc' },
             'limit' : quantity,
             'categories' : category
         }) %}

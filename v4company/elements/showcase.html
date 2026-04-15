@@ -2,6 +2,8 @@
 | default(8) %} {% set slide = slide %} {% set variants = variants %} {% if type
 == 'top_seller' %} {% set products = Products({ 'filter': ['available'], 'order'
 : { 'quantity_sold': 'desc' }, 'limit' : quantity, 'categories' : category }) %}
+{% elseif type == 'recent' %} {% set products = Products({ 'filter': ['available'], 'order'
+: { 'id': 'desc' }, 'limit' : quantity, 'categories' : category }) %}
 {% else %} {% if rand %} {% set products = Products({ 'filter': [type,
 'available'], 'limit' : quantity, 'order' : 'rand', 'categories' : category, })
 %} {% else %} {% set products = Products({ 'filter': [type, 'available'],

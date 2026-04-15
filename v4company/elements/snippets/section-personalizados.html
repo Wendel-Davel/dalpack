@@ -1,11 +1,13 @@
 {% set quantity = personalizado_quantity_1 | default(8) %} {% set slide = slide
 %} {% set variants = true %} {# =============================== CONFIGURAÇÃO DOS
 FILTROS =============================== #} {% set filters = ['available'] %} {%
-if personalizado_type_1 %} {% set filters = filters |
+if personalizado_type_1 and personalizado_type_1 != 'recent' %} {% set filters = filters |
 merge([personalizado_type_1]) %} {% endif %} {# ===============================
-BUSCA DE PRODUTOS =============================== #} {% set products =
+BUSCA DE PRODUTOS =============================== #} {% if personalizado_type_1 == 'recent' %} {% set products =
+Products({ 'filter': ['available'], 'order': { 'id': 'desc' }, 'limit': quantity, 'categories':
+personalizado_category_1 }) %} {% else %} {% set products =
 Products({ 'filter': filters, 'limit': quantity, 'categories':
-personalizado_category_1 }) %} {# =============================== SEÇÃO
+personalizado_category_1 }) %} {% endif %} {# =============================== SEÇÃO
 =============================== #} {% if products | length > 0 %}
 
 <section class="s-personalizados" style="order: 8">
